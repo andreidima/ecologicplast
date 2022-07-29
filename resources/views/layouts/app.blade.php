@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    {{-- <script src="{{ asset('js/app.js?v='.filemtime(public_path('js/app.js'))) }}" defer></script> --}}
     @vite(['resources/js/app.js'])
 
     <!-- Fonts -->
@@ -28,7 +29,9 @@
     @auth
     {{-- <div id="app"> --}}
     <header>
-        <nav class="navbar navbar-lg navbar-expand-lg navbar-dark shadow-sm" style="background-color: darkcyan">
+        <nav class="navbar navbar-lg navbar-expand-lg navbar-dark shadow-sm"
+            style="background-color: #2f5c8f"
+        >
             <div class="container">
                 <a class="navbar-brand me-5" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
