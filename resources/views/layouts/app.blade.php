@@ -29,7 +29,7 @@
     @auth
     {{-- <div id="app"> --}}
     <header>
-        <nav class="navbar navbar-lg navbar-expand-lg navbar-dark shadow-sm"
+        <nav class="navbar navbar-lg navbar-expand-lg navbar-dark shadow"
             style="background-color: #2f5c8f"
         >
             <div class="container">
