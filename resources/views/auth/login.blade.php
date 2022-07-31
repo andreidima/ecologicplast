@@ -5,15 +5,15 @@
     <div class="row py-5 justify-content-center">
         {{-- <div class="col-md-3 position-absolute top-50 start-50 translate-middle"> --}}
         {{-- <div class="col-md-4 py-5 d-flex justify-content-center"> --}}
-            <div class="card col-lg-3 p-0 shadow"
-                style="border:1px solid #2f5c8f"
+            <div class="card col-lg-3 p-0 shadow border culoare1-border"
+                {{-- style="border:1px solid #2f5c8f" --}}
             >
-                <div class="card-header text-white"
-                    style="background-color:#2f5c8f;"
+                <div class="card-header culoare1"
+                    {{-- style="background-color:#2f5c8f;" --}}
                 >
                     <div class="row">
                         <div class="col-lg-12 text-center fs-5">
-                            {{ config('app.name', 'Evidența persoanelor Focșani') }}
+                            {{ config('app.name', 'Laravel') }}
                         </div>
                         {{-- <div class="col-lg-12 text-center fs-5">
                             {{ __('auth.Login') }}
@@ -30,11 +30,11 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="input-group">
-                                    <span class="input-group-text" id="inputGroupPrepend2"
-                                        style="color:white; background-color:#2f5c8f"
+                                    <span class="input-group-text culoare1" id="inputGroupPrepend2"
+                                        {{-- style="color:white; background-color:#2f5c8f" --}}
                                     >
-                                        <i class="fas fa-user text-white"
-                                            style="color:white; background-color:#2f5c8f"
+                                        <i class="fas fa-user culoare1"
+                                            {{-- style="color:white; background-color:#2f5c8f" --}}
                                         ></i>
                                     </span>
                                     <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus
@@ -54,8 +54,8 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="input-group">
-                                        <span class="input-group-text text-white" id="inputGroupPrepend2"
-                                            style="color:white; background-color:#2f5c8f"
+                                        <span class="input-group-text culoare1" id="inputGroupPrepend2"
+                                            {{-- style="color:white; background-color:#2f5c8f" --}}
                                         >
                                             <i class="fas fa-lock"></i>
                                         </span>
@@ -97,8 +97,8 @@
                         <div class="row mb-2">
                             <div class="col-md-7 d-grid gap-2 mx-auto">
 
-                                <button type="submit" class="btn text-white mb-2 fs-5"
-                                    style="background-color:#00be49"
+                                <button type="submit" class="btn btn-success mb-2 fs-5 shadow-sm rounded-3"
+                                    {{-- style="background-color:#00be49" --}}
                                 >
                                     {{ __('auth.Login') }}
                                 </button>

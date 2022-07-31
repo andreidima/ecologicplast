@@ -1,6 +1,6 @@
 @if ($errors->any())
-    <div class="alert alert-danger mb-0 py-0" role="alert">
-        <ul class="mb-0">
+    <div class="alert alert-danger" role="alert">
+        <ul class="">
             @foreach ($errors->all() as $error)
                 <li>{{  $error }}</li>
             @endforeach
@@ -9,17 +9,17 @@
 @endif
 
 @if (session()->has('status') || session()->has('success'))
-    <div class="alert alert-success mb-0 py-0">
+    <div class="alert alert-success">
         {{ session('status') }}
         {{ session('succes') }}
     </div>
 @elseif (session()->has('eroare') || session()->has('error'))
-    <div class="alert alert-danger mb-0 py-0">
+    <div class="alert alert-danger">
         {{ session('eroare') }}
         {{ session('error') }}
     </div>
 @elseif (session()->has('atentionare') || session()->has('warning'))
-    <div class="alert alert-warning mb-0 py-0">
+    <div class="alert alert-warning">
         {{ session('atentionare') }}
         {{ session('warning') }}
     </div>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ProgramareController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,5 +20,8 @@ Route::redirect('/', '/acasa');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::view('/acasa', 'acasa');
+
+    Route::get('programari/afisare-calendar', [ProgramareController::class, 'index'])->name('programari.afisareCalendar');
+    Route::resource('/programari', ProgramareController::class,  ['parameters' => ['programari' => 'programare']]);
 });
 

@@ -1,7 +1,8 @@
 <script>
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
-import 'vue2-datepicker/locale/ro';
+import DatePicker from 'vue-datepicker-next';
+import 'vue-datepicker-next/index.css';
+
+// import 'vue-datepicker-next/locale/ro';
 import moment from 'moment';
 
 export default {
@@ -36,9 +37,22 @@ export default {
   name: 'ControlOpen',
   data() {
     return {
-      time: null,
-      dataNoua: '',
-      // latimePrelucrata: latime.replace('"','')
+        time: null,
+        dataNoua: '',
+        // latimePrelucrata: latime.replace('"','')
+        langObject: {
+            formatLocale: {
+                months: ['ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie', 'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie'],
+                monthsShort: ['ian', 'feb', 'mar', 'apr', 'mai', 'iun', 'iul', 'aug', 'sep', 'oct', 'noi', 'dec'],
+                weekdays: ['duminică', 'luni', 'marți', 'miercuri', 'joi', 'vineri', 'sâmbătă'],
+                weekdaysShort: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
+                weekdaysMin: ['Du', 'Lu', 'Ma', 'Mi', 'Jo', 'Vi', 'Sâ'],
+                firstDayOfWeek: 1,
+                firstWeekContainsDate: 7
+            },
+            // monthBeforeYear: false,
+        },
+        // langString: 'ro',
     }
   },
     methods: {
@@ -84,11 +98,11 @@ export default {
         else {
           this.time = this.dataVeche
         }
-        this.dataprogramare('dataProgramareTrimisa');
+        // this.dataprogramare('dataProgramareTrimisa');
     },
-    updated() {
-        this.dataprogramare('dataProgramareTrimisa');
-    }
+    // updated() {
+    //     this.dataprogramare('dataProgramareTrimisa');
+    // }
 
 
 }
@@ -98,7 +112,7 @@ export default {
   <div>
     <input type="text" :name=numeCampDb v-model="time" v-show="false">
     <date-picker
-      v-model="time"
+      v-model:value="time"
       :type=tip
       :value-type=valueType
       :format=format
@@ -107,6 +121,7 @@ export default {
       :editable="false"
       :style=latime
       :disabled-date="notDates"
+      :lang="langObject"
     >
     </date-picker>
   </div>

@@ -8,10 +8,17 @@
 import './bootstrap';
 
 import '../sass/app.scss'
+import '../css/andrei.css'
 
 
+import { createApp } from 'vue/dist/vue.esm-bundler.js'
 
-window.Vue = require('vue').default;
+// import App from './App.vue'
+
+// createApp(App).mount("#app")
+
+// window.Vue = require('vue').default;
+// window.Vue = import ('vue').default;
 
 /**
  * The following block of code may be used to automatically register your
@@ -24,9 +31,7 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-Vue.component('vue2-datepicker', require('./components/DatePicker.vue').default);
+import VueDatepickerNext from './components/DatePicker.vue';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,8 +39,22 @@ Vue.component('vue2-datepicker', require('./components/DatePicker.vue').default)
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-if (document.querySelector('#app')) {
-    const app = new Vue({
-        el: '#app',
-    });
-}
+// if (document.querySelector('#app')) {
+//     const app = new Vue({
+//         el: '#app',
+//     });
+// }
+
+
+const programari = createApp({
+    data() {
+        return {
+            message: 'Hello root Component 1'
+        };
+    },
+    components: {
+        'vue-datepicker-next': VueDatepickerNext,
+        // 'example-component-2': VueDatepickerNext,
+    },
+});
+programari.mount('#programari');

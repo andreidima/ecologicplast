@@ -1,0 +1,29 @@
+* {
+   font-size: 16px;
+}
+
+[v-cloak] {display: none  !important;}
+
+.culoare1 {
+    color: white;
+    background-color: #2f5c8f !important;
+}
+.culoare1-border {
+    border-color: #2f5c8f !important;
+}
+/* .culoare2 {
+    color: white;
+    background-color: #d85c27; */
+/* } */
+.culoare2 {
+    color: white;
+    background-color: #e66800 !important;
+}
+.culoare3 {
+    color: white;
+    background-color: #b999be !important;
+}
+.culoare4 {
+    color: white;
+    background-color: #A96762 !important;
+}
