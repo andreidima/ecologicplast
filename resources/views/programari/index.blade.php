@@ -132,84 +132,182 @@
                         </ul>
                     </nav>
             @elseif (Route::currentRouteName() === "programari.afisareCalendar")
-                {{-- <div class="table-responsive rounded mb-4">
+                <div class="table-responsive rounded mb-4">
                     <table class="table table-striped table-hover table-sm rounded table-bordered">
-                        <thead class="rounded culoare2">
+                        <thead class="rounded culoare2" style="">
                             <tr class="" style="padding:2rem">
-                                <th class="px-0 text-center">Ora</th>
+                                {{-- <th class="px-0 text-center">Ora</th>
+                                <th class="px-0 text-center">Minute</th> --}}
                                 @for ($ziua = \Carbon\Carbon::parse($search_data_inceput); $ziua <= \Carbon\Carbon::parse($search_data_sfarsit); $ziua->addDay())
                                     @if ($ziua->dayOfWeekIso != 7)
-                                        <td class="px-0 text-center">
+                                        <td colspan="3" class="px-0 text-center" style="">
                                     @else
-                                        <td class="px-0 text-center culoare1">
+                                        <td colspan="3" class="px-0 text-center culoare1" style="">
                                     @endif
-                                            {{ ucfirst($ziua->minDayName) }}
+                                            {{ ucfirst($ziua->dayName) }}
                                             <br>
-                                            {{ $ziua->day }}
+                                            {{ $ziua->isoFormat('DD.MM') }}
                                     </td>
                                 @endfor
                             </tr>
                         </thead>
                         <tbody>
                             @for ($ora = \Carbon\Carbon::now()->hour(8)->minute(0)->second(0); $ora <= \Carbon\Carbon::now()->hour(16)->minute(50)->second(0) ; $ora->addMinutes(10))
-                                <tr>
-                                    <td class="px-0 py-0 text-center text-white culoare2">
-                                        <b>{{ $ora->isoFormat('HH:mm') }}</b>
-                                    </td>
+                                {{-- La ora 12 este pauza de masa, asa ca se sare peste aceasta ora --}}
+                                {{-- @if ($ora->hour === 12)
+                                    <tr class="culoare1" style="line-height: 25 px; min-height: 25 px;height:5px; font: size 5px;">
+                                        <td colspan="{{ (\Carbon\Carbon::parse($search_data_sfarsit)->diffInDays(\Carbon\Carbon::parse($search_data_inceput)) + 1) * 3}}" class="px-0 py-0 text-center text-white align-middle">
+                                            <b>{{ $ora->isoFormat('HH:00') }} - pauză de masă</b>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $ora->hour(12)->minute(50);
+                                    @endphp
+                                @else --}}
+                                    <tr style="
+                                            line-height: 15px;
+                                            min-height: 15px;height:5px; font: size 5px;">
                                         @for ($ziua = \Carbon\Carbon::parse($search_data_inceput); $ziua <= \Carbon\Carbon::parse($search_data_sfarsit); $ziua->addDay())
+
+
                                             @php
-                                                $ziua->hour = $ora->hour;
-                                                $ziua->minute = $ora->minute;
+                                                $ziua->hour($ora->hour)->minute($ora->minute);
                                             @endphp
 
-                                            <td class="px-0 py-0 text-start">
-                                                @if (
-                                                    ($ora->hour === 12) || // Pauza de masa
-                                                    (($ziua->dayOfWeekIso === 6) && ($ora->hour >= 13)) || // Sambata program pana la 13:00
-                                                    ($ziua->dayOfWeekIso === 7) // Duminica liber
+                                                @if ((($ziua->dayOfWeekIso < 6) && ($ora->hour === 12)))
+                                                    {{-- Pauza de masa --}}
+                                                    @if ($ora->minute === 0)
+                                                        <td rowspan="6" class="px-1 py-0 text-center text-white culoare2 align-middle" style="width: 1%; white-space: nowrap; opacity:0.6; ">
+                                                            <b>{{ $ora->isoFormat('HH') }}</b>
+                                                        </td>
+                                                    @endif
+                                                    <td class="px-1 py-0 text-center text-white culoare2" style="width: 1%; white-space: nowrap; font-size:90%; opacity:1;">
+                                                        {{ $ora->isoFormat('mm') }}
+                                                    </td>
+                                                    <td></td>
+                                                @elseif (
+                                                        (($ziua->dayOfWeekIso === 6) && ($ora->hour >= 13)) || // Sambata program pana la 13:00
+                                                        ($ziua->dayOfWeekIso === 7) // Duminica liber
                                                     )
+                                                    <td colspan="3"></td>
                                                 @else
-                                                    <div class="d-flex">
-                                                        @php
-                                                            $nr_masini = 0;
-                                                        @endphp
-                                                        @foreach ($programari->where('data_ora_programare', '<=', $ziua)->where('data_ora_finalizare', '>=', $ziua->addHour()) as $programare)
-                                                            <a href="{{ $programare->path() }}/modifica">
-                                                                @switch($nr_masini)
-                                                                    @case(0)
-                                                                        <div class="text-white" style="width:20px; height: 100%; background-color:rgb(0, 110, 37);">
-                                                                        @break
-                                                                    @case(1)
-                                                                        <div class="text-white" style="width:20px; height: 100%; background-color:rgb(48, 151, 0);">
-                                                                        @break
-                                                                    @case(2)
-                                                                        <div class="text-white" style="width:20px; height: 100%; background-color:rgb(229, 255, 0);">
-                                                                        @break
-                                                                    @case(3)
-                                                                        <div class="text-white" style="width:20px; height: 100%; background-color:rgb(196, 0, 0);">
-                                                                        @break
-                                                                    @default
-                                                                        <div class="text-white" style="width:20px; height: 100%; background-color:red;">
-                                                                @endswitch
-                                                                    {{ ++$nr_masini }}
-                                                                </div>
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
+                                                    @if ($ora->minute === 0)
+                                                        <td rowspan="6" class="px-1 py-0 text-center text-white culoare2 align-middle" style="width: 1%; white-space: nowrap; opacity:0.6; ">
+                                                            <b>{{ $ora->isoFormat('HH') }}</b>
+                                                        </td>
+                                                    @endif
+                                                    <td class="px-1 py-0 text-center text-white culoare2" style="width: 1%; white-space: nowrap; font-size:90%; opacity:1;">
+                                                        {{ $ora->isoFormat('mm') }}
+                                                    </td>
+                                                    <td class="px-0 py-0 text-start">
+                                                        <div class="d-flex" style="min-width: 50px;">
+                                                            @php
+                                                                $nr_masini = 0;
+                                                                // $canal = 0;
+                                                                // $geometrie = 0;
+                                                                // $freon = 0;
+                                                            @endphp
+                                                            @foreach ($programari->where('data_ora_programare', '<=', $ziua)->where('data_ora_finalizare', '>=', $ziua->addMinutes(10)) as $programare)
+                                                                <a href="{{ $programare->path() }}/modifica">
+                                                                    @switch($nr_masini)
+                                                                        @case(0)
+                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:rgb(0, 110, 37);">
+                                                                            @break
+                                                                        @case(1)
+                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:rgb(48, 151, 0);">
+                                                                            @break
+                                                                        @case(2)
+                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:rgb(145, 161, 0);">
+                                                                            @break
+                                                                        @case(3)
+                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:RED;">
+                                                                            @break
+                                                                        @default
+                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:rgb(196, 0, 0);">
+                                                                    @endswitch
+                                                                    @php
+                                                                        ++$nr_masini;
+                                                                        $mesaj = '';
+                                                                    @endphp
+                                                                        @if ($programare->lucrare_canal === 1)
+                                                                            @php
+                                                                                $mesaj .= 'C';
+                                                                            @endphp
+                                                                        @endif
+                                                                        @if ($programare->lucrare_geometrie === 1)
+                                                                            @php
+                                                                                $mesaj .= 'G';
+                                                                            @endphp
+                                                                        @endif
+                                                                        @if ($programare->lucrare_freon === 1)
+                                                                            @php
+                                                                                $mesaj .= 'F';
+                                                                            @endphp
+                                                                        @endif
+                                                                        @if ($mesaj === '')
+                                                                            @php
+                                                                                $mesaj .= '&nbsp;';
+                                                                            @endphp
+                                                                        @endif
+                                                                        <p class="m-0 p-0" style="white-space: nowrap;"
+                                                                            title="{{ $programare->nr_auto . ': ' . $programare->lucrare }}">
+                                                                            {!! $mesaj !!}
+                                                                        </p>
+                                                                    </div>
+
+                                                                    {{-- @if ($programare->lucrare_canal === 1)
+                                                                        @php
+                                                                            $canal++;
+                                                                        @endphp
+                                                                    @endif
+                                                                    @if ($programare->lucrare_geometrie === 1)
+                                                                        @php
+                                                                            $geometrie++;
+                                                                        @endphp
+                                                                    @endif
+                                                                    @if ($programare->lucrare_freon === 1)
+                                                                        @php
+                                                                            $freon++;
+                                                                        @endphp
+                                                                    @endif
+                                                                    @if (($programare->lucrare_canal === 0) && ($programare->lucrare_geometrie === 0) && ($programare->lucrare_freon === 0))
+                                                                        @php
+                                                                            $nr_masini++;
+                                                                        @endphp
+                                                                    @endif --}}
+                                                                </a>
+
+                                                            @endforeach
+
+                                                            {{-- @for ($i = 0; $i < $canal; $i++)
+                                                                <span class="badge rounded-pill" style="background-color:#00a100">&nbsp;</span>
+                                                            @endfor
+                                                            @for ($i = 0; $i < $geometrie; $i++)
+                                                                <span class="badge rounded-pill" style="background-color:#ff4141">&nbsp;</span>
+                                                            @endfor
+                                                            @for ($i = 0; $i < $freon; $i++)
+                                                                <span class="badge rounded-pill" style="background-color:#298dff">&nbsp;</span>
+                                                            @endfor
+                                                            @for ($i = 0; $i < ($nr_masini - $canal - $geometrie - $freon); $i++)
+                                                                <span class="badge rounded-pill" style="background-color:#757575">&nbsp;</span>
+                                                            @endfor --}}
+
+                                                        </div>
                                                 @endif
 
                                             @php
-                                                $ziua->hour = 0; // altfel ultima zi din iteratie nu va mai fi egala cu search_data_sfarsit, va fi mai mai cu acele ore adaugate
+                                                $ziua->hour(0)->minute(0); // altfel ultima zi din iteratie nu va mai fi egala cu search_data_sfarsit, va fi mai mai cu acele ore adaugate
                                             @endphp
                                             </td>
                                         @endfor
-                                </tr>
+                                    </tr>
+                                {{-- @endif --}}
                             @endfor
                         </tbody>
                     </table>
-                </div> --}}
+                </div>
 
-        <div class="row mb-2">
+        {{-- <div class="row mb-2">
             @for ($ziua = \Carbon\Carbon::parse($search_data_inceput); $ziua <= \Carbon\Carbon::parse($search_data_sfarsit); $ziua->addDay())
                 <div class="col-md-2 p-0">
                     <div class="" style="border-radius: 20px 20px 0px 0px;">
@@ -244,7 +342,7 @@
                                             $total_minute_zi = 0;
                                         @endphp
 
-                                        {{-- @forelse ($programari->where('programare_data', \Carbon\Carbon::now()->weekday($week_day)->toDateString()) as $programare)
+                                        @forelse ($programari->where('programare_data', \Carbon\Carbon::now()->weekday($week_day)->toDateString()) as $programare)
                                             @php
                                                 //variabila pentru crearea divului gol
                                                 $durata_minute_inainte = $ora_initiala->diffInMinutes($programare->programare_ora);
@@ -303,13 +401,13 @@
                                         @empty
                                             <div class="border border-secondary" style="width: 100%; background-color:white; height:600px;">
                                             </div>
-                                        @endforelse --}}
+                                        @endforelse
                                     </div>
                         </div>
                     </div>
                 </div>
             @endfor
-        </div>
+        </div> --}}
 
             @endif
         </div>

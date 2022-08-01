@@ -71,8 +71,11 @@ class ProgramareController extends Controller
                             ->whereDate('data_ora_finalizare', '>=', $search_data_inceput);
                     });
                 })
+                ->orderBy('lucrare_canal', 'desc')
+                ->orderBy('lucrare_geometrie', 'desc')
+                ->orderBy('lucrare_freon', 'desc')
                 ->get();
-
+// dd($programari);
             foreach ($programari as $programare){
                 if (is_null($programare->data_ora_programare)){
                     $programare->data_ora_programare = $programare->data_ora_finalizare;
