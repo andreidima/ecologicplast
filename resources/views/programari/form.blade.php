@@ -86,12 +86,12 @@
                     ></vue-datepicker-next>
                 </div>
             </div>
-            <div class="col-lg-5 mb-5 mx-auto">
+            <div class="col-lg-7 mb-5 mx-auto">
                 <label for="lucrare" class="form-label mb-0 ps-3">Lucrare</label>
                 <textarea class="form-control bg-white {{ $errors->has('lucrare') ? 'is-invalid' : '' }}"
-                    name="lucrare" rows="4">{{ old('lucrare', $programare->lucrare) }}</textarea>
+                    name="lucrare" rows="5">{{ old('lucrare', $programare->lucrare) }}</textarea>
             </div>
-            <div class="col-lg-2 mb-5 ps-s mx-auto d-flex align-items-center">
+            <div class="col-lg-2 mb-5 ps-s mx-auto d-flex align-items-end">
                 <div>
                     <div class="form-check">
                         <input class="form-check-input" type="hidden" name="lucrare_canal" value="0" />
@@ -117,12 +117,21 @@
                             Freon
                         </label>
                     </div>
+                    <br>
+                    <div class="form-check">
+                        <input class="form-check-input" type="hidden" name="piese_client" value="0" />
+                        <input class="form-check-input" type="checkbox" value="1" name="piese_client" id="piese_client"
+                            {{ old('piese_client', $programare->piese_client) == '1' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="piese_client">
+                            Piese client
+                        </label>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-5 mb-5 mx-auto">
+            <div class="col-lg-3 mb-5 mx-auto">
                 <label for="observatii" class="form-label mb-0 ps-3">Observații</label>
                 <textarea class="form-control bg-white {{ $errors->has('observatii') ? 'is-invalid' : '' }}"
-                    name="observatii" rows="4">{{ old('observatii', $programare->observatii) }}</textarea>
+                    name="observatii" rows="5">{{ old('observatii', $programare->observatii) }}</textarea>
             </div>
         </div>
         <div class="row">

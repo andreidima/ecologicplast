@@ -16,7 +16,7 @@
                 @if (Route::currentRouteName() === "programari.index")
                     <form class="needs-validation" novalidate method="GET" action="{{ route(Route::currentRouteName())  }}">
                         @csrf
-                        <div class="row mb-1 input-group custom-search-form justify-content-center" id="programari">
+                        <div class="row mb-1 custom-search-form justify-content-center" id="programari">
                             <div class="col-lg-6">
                                 <input type="text" class="form-control rounded-3" id="search_client" name="search_client" placeholder="Client" value="{{ $search_client }}">
                             </div>
@@ -41,7 +41,7 @@
                                 {{-- </div> --}}
                             </div>
                         </div>
-                        <div class="row input-group custom-search-form justify-content-center">
+                        <div class="row custom-search-form justify-content-center">
                             <button class="btn btn-sm btn-primary text-white col-md-4 me-3 border border-dark rounded-3" type="submit">
                                 <i class="fas fa-search text-white me-1"></i>Caută
                             </button>
@@ -50,6 +50,68 @@
                             </a>
                         </div>
                     </form>
+                @elseif (Route::currentRouteName() === "programari.afisareCalendar")
+                    <form class="needs-validation" novalidate method="GET" action="{{ route(Route::currentRouteName())  }}">
+                        @csrf
+                        <div class="row mb-1 custom-search-form justify-content-center" id="programari">
+                            <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                                <label class="me-1">Data început:</label>
+                                <vue-datepicker-next
+                                    data-veche="{{ $search_data_inceput }}"
+                                    nume-camp-db="search_data_inceput"
+                                    tip="date"
+                                    value-type="YYYY-MM-DD"
+                                    format="DD-MM-YYYY"
+                                    :latime="{ width: '125px' }"
+                                    style="margin-right: 20px;"
+                                ></vue-datepicker-next>
+                            </div>
+                            <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                                <label class="me-1">Data sfârșit:</label>
+                                <vue-datepicker-next
+                                    data-veche="{{ $search_data_sfarsit }}"
+                                    nume-camp-db="search_data_sfarsit"
+                                    tip="date"
+                                    value-type="YYYY-MM-DD"
+                                    format="DD-MM-YYYY"
+                                    :latime="{ width: '125px' }"
+                                    style="margin-right: 20px;"
+                                ></vue-datepicker-next>
+                            </div>
+                        </div>
+                        <div class="row mb-1 custom-search-form justify-content-center">
+                            <div class="col-md-4 d-grid gap-2">
+                                <button class="btn btn-sm btn-primary text-white border border-dark rounded-3" type="submit">
+                                    <i class="fas fa-search text-white me-1"></i>Caută
+                                </button>
+                            </div>
+                            <div class="col-md-4 d-grid gap-2">
+                                <a class="btn btn-sm bg-secondary text-white border border-dark rounded-3" href="/programari/afisare-calendar" role="button">
+                                    <i class="far fa-trash-alt text-white me-1"></i>Resetează căutarea
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row mb-1 d-flex justify-content-center">
+                        <form class="needs-validation col-md-6 d-grid gap-2" novalidate method="GET" action="{{ route(Route::currentRouteName())  }}">
+                            {{-- <div class="row custom-search-form justify-content-center"> --}}
+                                <input type="hidden" name="search_data_inceput" value="{{ \Carbon\Carbon::parse($search_data_inceput)->subDays(7)->startOfWeek()->toDateString() }}">
+                                <input type="hidden" name="search_data_sfarsit" value="{{ \Carbon\Carbon::parse($search_data_inceput)->subDays(7)->endOfWeek()->toDateString() }}">
+                                <button class="btn btn-sm btn-primary text-white border border-dark rounded-3 shadow block" type="submit">
+                                    << Săptămâna anterioară
+                                </button>
+                            {{-- </div> --}}
+                        </form>
+                        <form class="needs-validation col-md-6 d-grid gap-2" novalidate method="GET" action="{{ route(Route::currentRouteName())  }}">
+                            {{-- <div class="row custom-search-form justify-content-center"> --}}
+                                <input type="hidden" name="search_data_inceput" value="{{ \Carbon\Carbon::parse($search_data_sfarsit)->addDays(7)->startOfWeek()->toDateString() }}">
+                                <input type="hidden" name="search_data_sfarsit" value="{{ \Carbon\Carbon::parse($search_data_sfarsit)->addDays(7)->endOfWeek()->toDateString() }}">
+                                <button class="btn btn-sm btn-primary text-white border border-dark rounded-3 shadow" type="submit">
+                                    Săptămâna următoare >>
+                                </button>
+                            {{-- </div> --}}
+                        </form>
+                    </div>
                 @endif
             </div>
             <div class="col-lg-3 text-end">

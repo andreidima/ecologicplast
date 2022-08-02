@@ -194,6 +194,7 @@ class ProgramareController extends Controller
                 'lucrare_canal' => '',
                 'lucrare_geometrie' => '',
                 'lucrare_freon' => '',
+                'piese_client' => '',
                 'observatii' => 'nullable|max:2000',
                 'user_id' => ''
             ],

@@ -110,6 +110,14 @@
                             </tr>
                             <tr>
                                 <td class="pe-4">
+                                    Piese client
+                                </td>
+                                <td>
+                                    {{ ($programare->piese_client == '1') ? 'DA' : 'NU' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="pe-4">
                                     Observații
                                 </td>
                                 <td>
