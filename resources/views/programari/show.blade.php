@@ -86,26 +86,18 @@
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Canal
+                                    Tip lucrare
                                 </td>
                                 <td>
-                                    {{ ($programare->lucrare_canal == '1') ? 'DA' : 'NU' }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="pe-4">
-                                    Geometrie
-                                </td>
-                                <td>
-                                    {{ ($programare->lucrare_geometrie == '1') ? 'DA' : 'NU' }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="pe-4">
-                                    Freon
-                                </td>
-                                <td>
-                                    {{ ($programare->lucrare_freon == '1') ? 'DA' : 'NU' }}
+                                    @if ($programare->geometrie_turism === 1)
+                                        <span class="me-1 px-1 culoare1 text-white">GM</span>
+                                    @endif
+                                    @if ($programare->geometrie_camion === 1)
+                                        <span class="me-1 px-1 culoare1 text-white">GC</span>
+                                    @endif
+                                    @if ($programare->freon === 1)
+                                        <span class="me-1 px-1 culoare1 text-white">F</span>
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -113,7 +105,43 @@
                                     Piese client
                                 </td>
                                 <td>
-                                    {{ ($programare->piese_client == '1') ? 'DA' : 'NU' }}
+                                    @switch($programare->piese)
+                                        @case(0)
+                                            Fără
+                                            @break
+                                        @case(1)
+                                            Comandate
+                                            @break
+                                        @case(2)
+                                            Venite
+                                            @break
+                                        @case(3)
+                                            Client
+                                            @break
+                                        @default
+                                    @endswitch
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="pe-4">
+                                    Stare mașină
+                                </td>
+                                <td>
+                                    @switch($programare->stare_masina)
+                                        @case(0)
+                                            Nu este la service
+                                            @break
+                                        @case(1)
+                                            În așteptare
+                                            @break
+                                        @case(2)
+                                            În lucru
+                                            @break
+                                        @case(3)
+                                            Finalizată
+                                            @break
+                                        @default
+                                    @endswitch
                                 </td>
                             </tr>
                             <tr>

@@ -75,7 +75,7 @@ class ProgramareController extends Controller
                 ->orderBy('lucrare_geometrie', 'desc')
                 ->orderBy('lucrare_freon', 'desc')
                 ->get();
-// dd($programari);
+
             foreach ($programari as $programare){
                 if (is_null($programare->data_ora_programare)){
                     $programare->data_ora_programare = $programare->data_ora_finalizare;
@@ -83,7 +83,7 @@ class ProgramareController extends Controller
                     $programare->data_ora_finalizare = $programare->data_ora_programare;
                 }
             }
-// dd($programari);
+
             return view('programari.index', compact('programari', 'search_data_inceput', 'search_data_sfarsit'));
         }
     }
@@ -108,11 +108,10 @@ class ProgramareController extends Controller
      */
     public function store(Request $request)
     {
-        $request->request->add(['user_id' => $request->user()->id]);
         $programare = Programare::create($this->validateRequest($request));
 
         return redirect($request->session()->get('programare_return_url') ?? ('/programari'))
-            ->with('status', 'Programarea pentru clientul „' . ($programare->client ?? '') . '” a fost adăugată cu succes!');
+            ->with('status', 'Programarea pentru mașina „' . ($programare->masina ?? '') . '” a fost adăugată cu succes!');
     }
 
     /**
@@ -151,11 +150,10 @@ class ProgramareController extends Controller
      */
     public function update(Request $request, Programare $programare)
     {
-        $request->request->add(['user_id' => $request->user()->id]);
         $programare->update($this->validateRequest($request));
 
         return redirect($request->session()->get('programare_return_url') ?? ('/programari'))
-            ->with('status', 'Programarea pentru clientul „' . ($programare->client ?? '') . '” a fost modificată cu succes!');
+            ->with('status', 'Programarea pentru mașina „' . ($programare->masina ?? '') . '” a fost modificată cu succes!');
     }
 
     /**
@@ -164,11 +162,12 @@ class ProgramareController extends Controller
      * @param  \App\Programare  $programare
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Programare $programare)
+    public function destroy(Request $request, Programare $programare)
     {
         $programare->delete();
+        \App\Models\ProgramareIstoric::where('id', $programare->id)->where('operatie', 'Stergere')->update(['user_id' => $request->user()->id]);
 
-        return back()->with('status', 'Programarea pentru clientul „' . ($programare->client ?? '') . '” a fost ștearsă cu succes!');
+        return back()->with('status', 'Programarea pentru mașina „' . ($programare->masina ?? '') . '” a fost ștearsă cu succes!');
     }
 
     /**
@@ -178,6 +177,7 @@ class ProgramareController extends Controller
      */
     protected function validateRequest(Request $request, $serviciu = null)
     {
+        $request->request->add(['user_id' => $request->user()->id]);
         // if (is_null($request->data_ora_finalizare)){
         //     $request->data_ora_finalizare = $request->data_ora_programare;
         // }
@@ -191,10 +191,11 @@ class ProgramareController extends Controller
                 'masina' => 'nullable|max:500',
                 'nr_auto' => 'nullable|max:500',
                 'lucrare' => 'nullable|max:2000',
-                'lucrare_canal' => '',
-                'lucrare_geometrie' => '',
-                'lucrare_freon' => '',
-                'piese_client' => '',
+                'geometrie_turism' => '',
+                'geometrie_camion' => '',
+                'freon' => '',
+                'piese' => '',
+                'stare_masina' => '',
                 'observatii' => 'nullable|max:2000',
                 'user_id' => ''
             ],

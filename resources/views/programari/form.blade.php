@@ -86,52 +86,89 @@
                     ></vue-datepicker-next>
                 </div>
             </div>
-            <div class="col-lg-7 mb-5 mx-auto">
+            <div class="col-lg-8 mb-5 mx-auto">
                 <label for="lucrare" class="form-label mb-0 ps-3">Lucrare</label>
                 <textarea class="form-control bg-white {{ $errors->has('lucrare') ? 'is-invalid' : '' }}"
                     name="lucrare" rows="5">{{ old('lucrare', $programare->lucrare) }}</textarea>
             </div>
-            <div class="col-lg-2 mb-5 ps-s mx-auto d-flex align-items-end">
+            <div class="col-lg-4 mb-5 ps-s mx-auto d-flex align-items-center">
                 <div>
                     <div class="form-check">
-                        <input class="form-check-input" type="hidden" name="lucrare_canal" value="0" />
-                        <input class="form-check-input" type="checkbox" value="1" name="lucrare_canal" id="lucrare_canal"
-                            {{ old('lucrare_canal', $programare->lucrare_canal) == '1' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="lucrare_canal">
-                            Canal
-                        </label>
+                        <input class="form-check-input" type="hidden" name="geometrie_turism" value="0" />
+                        <input class="form-check-input" type="checkbox" value="1" name="geometrie_turism" id="geometrie_turism"
+                            {{ old('geometrie_turism', $programare->geometrie_turism) == '1' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="geometrie_turism">Geometrie Turism</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="hidden" name="lucrare_geometrie" value="0" />
-                        <input class="form-check-input" type="checkbox" value="1" name="lucrare_geometrie" id="lucrare_geometrie"
-                            {{ old('lucrare_geometrie', $programare->lucrare_geometrie) == '1' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="lucrare_geometrie">
-                            Geometrie
-                        </label>
+                        <input class="form-check-input" type="hidden" name="geometrie_camion" value="0" />
+                        <input class="form-check-input" type="checkbox" value="1" name="geometrie_camion" id="geometrie_camion"
+                            {{ old('geometrie_camion', $programare->geometrie_camion) == '1' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="geometrie_camion">Geometrie Camion</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="hidden" name="lucrare_freon" value="0" />
-                        <input class="form-check-input" type="checkbox" value="1" name="lucrare_freon" id="lucrare_freon"
-                            {{ old('lucrare_freon', $programare->lucrare_freon) == '1' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="lucrare_freon">
-                            Freon
-                        </label>
-                    </div>
-                    <br>
-                    <div class="form-check">
-                        <input class="form-check-input" type="hidden" name="piese_client" value="0" />
-                        <input class="form-check-input" type="checkbox" value="1" name="piese_client" id="piese_client"
-                            {{ old('piese_client', $programare->piese_client) == '1' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="piese_client">
-                            Piese client
-                        </label>
+                        <input class="form-check-input" type="hidden" name="freon" value="0" />
+                        <input class="form-check-input" type="checkbox" value="1" name="freon" id="freon"
+                            {{ old('freon', $programare->freon) == '1' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="freon">Freon</label>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 mb-5 mx-auto">
+            <div class="col-lg-3 mb-5 ps-s mx-auto d-flex align-items-center" style="">
+                <div>
+                    Piese:
+                    <br>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="0" name="piese" id="piese_fara"
+                            {{ old('piese', $programare->piese) == '0' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="piese_fara">Fără</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="1" name="piese" id="piese_comandate"
+                            {{ old('piese', $programare->piese) == '1' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="piese_comandate">Comandate</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="2" name="piese" id="piese_venite"
+                            {{ old('piese', $programare->piese) == '2' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="piese_venite">Venite</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="3" name="piese" id="piese_client"
+                            {{ old('piese', $programare->piese) == '3' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="piese_client">Client</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 mb-5 ps-s mx-auto d-flex align-items-end">
+                <div>
+                    Stare mașină:
+                    <br>
+                    <div class="form-check px-4">
+                        <input class="form-check-input" type="radio" value="0" name="stare_masina" id="stare_masina_nu_este_la_service"
+                            {{ old('stare_masina', $programare->stare_masina) == '0' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="stare_masina_nu_este_la_service">Nu este la service</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="1" name="stare_masina" id="stare_masina_in_asteptare"
+                            {{ old('stare_masina', $programare->stare_masina) == '1' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="stare_masina_in_asteptare">În așteptare</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="2" name="stare_masina" id="stare_masina_in_lucru"
+                            {{ old('stare_masina', $programare->stare_masina) == '2' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="stare_masina_in_lucru">În lucru</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="3" name="stare_masina" id="stare_masina_finalizata"
+                            {{ old('stare_masina', $programare->stare_masina) == '3' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="stare_masina_finalizata">Finalizată</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-5 mx-auto">
                 <label for="observatii" class="form-label mb-0 ps-3">Observații</label>
                 <textarea class="form-control bg-white {{ $errors->has('observatii') ? 'is-invalid' : '' }}"
-                    name="observatii" rows="5">{{ old('observatii', $programare->observatii) }}</textarea>
+                    name="observatii" rows="4">{{ old('observatii', $programare->observatii) }}</textarea>
             </div>
         </div>
         <div class="row">
