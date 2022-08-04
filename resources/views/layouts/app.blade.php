@@ -44,35 +44,38 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item me-3">
+                        {{-- <li class="nav-item me-3">
                             <a class="nav-link active" aria-current="page" href="/programari">
                                 <i class="fa-solid fa-calendar-check me-1"></i>Programări
                             </a>
-                        </li>
-                        <li class="nav-item me-3">
-                            <a class="nav-link active" aria-current="page" href="/programari/afisare-calendar">
-                                <i class="fa-solid fa-calendar-days me-1"></i>Calendar
-                            </a>
-                        </li>
-                        {{-- <li class="nav-item me-3 dropdown">
+                        </li> --}}
+                        <li class="nav-item me-3 dropdown">
                             <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-calendar-check me-1"></i>
                                 Programări
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <a class="dropdown-item" href="/programari">
-                                        Administrare
-                                    </a>
+                                    <form class="needs-validation" novalidate method="GET" action="/programari">
+                                        <input type="hidden" name="search_data" value="{{ \Carbon\Carbon::now()->todatestring() }}">
+                                        <button class="dropdown-item btn btn-link" href="programari" type="submit">
+                                            Azi
+                                        </button>
+                                    </form>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <a class="dropdown-item" href="/ssm/salariati">
-                                        Salariați
+                                    <a class="dropdown-item" href="/programari">
+                                        Toate
                                     </a>
                                 </li>
                             </ul>
-                        </li> --}}
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link active" aria-current="page" href="/programari/afisare-calendar">
+                                <i class="fa-solid fa-calendar-days me-1"></i>Calendar
+                            </a>
+                        </li>
                     </ul>
                     </ul>
 

@@ -136,6 +136,7 @@
                                 <th class="text-center">Lucrare</th>
                                 <th class="text-center">Tip lucrare</th>
                                 <th class="text-center"><i class="fa-solid fa-car"></i></th>
+                                <th class="text-center">Operator</th>
                                 <th class="text-end">Acțiuni</th>
                             </tr>
                         </thead>
@@ -189,6 +190,9 @@
                                             @default
 
                                         @endswitch
+                                    </td>
+                                    <td>
+                                        {{ $programare->user->name ?? '' }}
                                     </td>
                                     {{-- <td class="text-center">
                                         <b>{{ $programare->data_ora_finalizare ? \Carbon\Carbon::parse($programare->data_ora_finalizare)->isoFormat('DD.MM.YYYY HH:mm') : '' }}</b>
@@ -309,35 +313,35 @@
                                                                 <a href="{{ $programare->path() }}/modifica">
                                                                     @switch($nr_masini)
                                                                         @case(0)
-                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:rgb(0, 110, 37);">
+                                                                            <div class="text-white text-center rounded-3" style="min-width:30px; height: 100%; background-color:rgb(0, 110, 37);">
                                                                             @break
                                                                         @case(1)
-                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:rgb(48, 151, 0);">
+                                                                            <div class="text-white text-center rounded-3" style="min-width:30px; height: 100%; background-color:rgb(48, 151, 0);">
                                                                             @break
                                                                         @case(2)
-                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:rgb(145, 161, 0);">
+                                                                            <div class="text-white text-center rounded-3" style="min-width:30px; height: 100%; background-color:rgb(145, 161, 0);">
                                                                             @break
                                                                         @case(3)
-                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:RED;">
+                                                                            <div class="text-white text-center rounded-3" style="min-width:30px; height: 100%; background-color:RED;">
                                                                             @break
                                                                         @default
-                                                                            <div class="text-white text-center rounded-3" style="min-width:20px; height: 100%; background-color:rgb(196, 0, 0);">
+                                                                            <div class="text-white text-center rounded-3" style="min-width:30px; height: 100%; background-color:rgb(196, 0, 0);">
                                                                     @endswitch
                                                                     @php
                                                                         ++$nr_masini;
                                                                         $mesaj = '';
                                                                     @endphp
-                                                                        @if ($programare->lucrare_canal === 1)
+                                                                        @if ($programare->geometrie_turism === 1)
                                                                             @php
-                                                                                $mesaj .= 'C';
+                                                                                $mesaj .= 'GT';
                                                                             @endphp
                                                                         @endif
-                                                                        @if ($programare->lucrare_geometrie === 1)
+                                                                        @if ($programare->geometrie_camion === 1)
                                                                             @php
-                                                                                $mesaj .= 'G';
+                                                                                $mesaj .= 'GC';
                                                                             @endphp
                                                                         @endif
-                                                                        @if ($programare->lucrare_freon === 1)
+                                                                        @if ($programare->freon === 1)
                                                                             @php
                                                                                 $mesaj .= 'F';
                                                                             @endphp

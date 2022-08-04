@@ -22,8 +22,8 @@ class ProgramareController extends Controller
             $search_data = \Request::get('search_data');
             $search_nr_auto = \Request::get('search_nr_auto');
 
-            $programari = Programare::
-                when($search_client, function ($query, $search_client) {
+            $programari = Programare::with('user')
+                ->when($search_client, function ($query, $search_client) {
                     return $query->where('client', 'like', '%' . $search_client . '%');
                 })
                 ->when($search_telefon, function ($query, $search_telefon) {
@@ -45,10 +45,13 @@ class ProgramareController extends Controller
                         $query->orwhere(function($query) use ($search_data){
                             $query->whereDate('data_ora_programare', '<=', $search_data)
                                 ->whereDate('data_ora_finalizare', '>=', $search_data);
-                        });
+                        })
+                        ->orderBy('data_ora_programare');
                     });
                 })
-                ->latest()
+                 ->when(!$search_data, function ($query){
+                     $query->latest();
+                 })
                 ->simplePaginate(25);
 
             return view('programari.index', compact('programari', 'search_client', 'search_telefon', 'search_data', 'search_nr_auto'));
@@ -71,9 +74,9 @@ class ProgramareController extends Controller
                             ->whereDate('data_ora_finalizare', '>=', $search_data_inceput);
                     });
                 })
-                ->orderBy('lucrare_canal', 'desc')
-                ->orderBy('lucrare_geometrie', 'desc')
-                ->orderBy('lucrare_freon', 'desc')
+                ->orderBy('geometrie_turism', 'desc')
+                ->orderBy('geometrie_camion', 'desc')
+                ->orderBy('freon', 'desc')
                 ->get();
 
             foreach ($programari as $programare){

@@ -16,4 +16,9 @@ class Programare extends Model
     {
         return "/programari/{$this->id}";
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
