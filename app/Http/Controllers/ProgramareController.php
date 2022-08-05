@@ -13,7 +13,7 @@ class ProgramareController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $serviciu = null)
+    public function index(Request $request)
     {
         $request->session()->forget('programare_return_url');
         if ($request->route()->getName() === "programari.index"){
@@ -21,6 +21,15 @@ class ProgramareController extends Controller
             $search_telefon = \Request::get('search_telefon');
             $search_data = \Request::get('search_data');
             $search_nr_auto = \Request::get('search_nr_auto');
+
+            switch ($request->input('schimba_ziua')) {
+                case 'o_zi_inapoi':
+                    $search_data = \Carbon\Carbon::parse($search_data)->subDay()->toDateString();
+                    break;
+                case 'o_zi_inainte':
+                    $search_data = \Carbon\Carbon::parse($search_data)->addDay()->toDateString();
+                    break;
+            }
 
             $programari = Programare::with('user')
                 ->when($search_client, function ($query, $search_client) {
@@ -96,7 +105,7 @@ class ProgramareController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $serviciu = null)
+    public function create(Request $request)
     {
         $request->session()->get('programare_return_url') ?? $request->session()->put('programare_return_url', url()->previous());
 
@@ -178,7 +187,7 @@ class ProgramareController extends Controller
      *
      * @return array
      */
-    protected function validateRequest(Request $request, $serviciu = null)
+    protected function validateRequest(Request $request)
     {
         $request->request->add(['user_id' => $request->user()->id]);
         // if (is_null($request->data_ora_finalizare)){

@@ -29,6 +29,10 @@
                             <div class="col-lg-6 d-flex justify-content-center align-items-center">
                                 {{-- <div> --}}
                                     <label class="me-1">Data:</label>
+                                    <button class="btn btn-sm btn-primary text-white border border-dark rounded-3 shadow block"
+                                        name="schimba_ziua" value="o_zi_inapoi" type="submit">
+                                        <
+                                    </button>
                                     <vue-datepicker-next
                                         data-veche="{{ $search_data }}"
                                         nume-camp-db="search_data"
@@ -36,9 +40,13 @@
                                         value-type="YYYY-MM-DD"
                                         format="DD-MM-YYYY"
                                         :latime="{ width: '125px' }"
-                                        style="margin-right: 20px;"
+                                        style="margin: 0px 5px;"
                                     ></vue-datepicker-next>
+                                    <button class="btn btn-sm btn-primary text-white border border-dark rounded-3 shadow block"
+                                        name="schimba_ziua" value="o_zi_inainte" type="submit">
                                 {{-- </div> --}}
+                                    >
+                                </button>
                             </div>
                         </div>
                         <div class="row custom-search-form justify-content-center">
