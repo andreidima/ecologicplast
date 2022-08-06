@@ -54,9 +54,9 @@ class ProgramareController extends Controller
                         $query->orwhere(function($query) use ($search_data){
                             $query->whereDate('data_ora_programare', '<=', $search_data)
                                 ->whereDate('data_ora_finalizare', '>=', $search_data);
-                        })
-                        ->orderBy('data_ora_programare');
-                    });
+                        });
+                    })
+                    ->orderBy('data_ora_programare');
                 })
                  ->when(!$search_data, function ($query){
                      $query->latest();
