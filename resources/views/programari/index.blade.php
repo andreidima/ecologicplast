@@ -242,10 +242,10 @@
                         </ul>
                     </nav>
             @elseif (Route::currentRouteName() === "programari.afisareCalendar")
-                <div class="table-responsive rounded mb-4">
+                <div class="table-responsive rounded mb-4" style="height:90vh">
                     <table class="table table-striped table-hover table-sm rounded table-bordered">
-                        <thead class="rounded culoare2" style="">
-                            <tr class="" style="padding:2rem">
+                        <thead class="rounded" style="">
+                            <tr class="culoare2" style="padding:2rem; position: sticky; top: 0; z-index: 1;">
                                 {{-- <th class="px-0 text-center">Ora</th>
                                 <th class="px-0 text-center">Minute</th> --}}
                                 @for ($ziua = \Carbon\Carbon::parse($search_data_inceput); $ziua <= \Carbon\Carbon::parse($search_data_sfarsit); $ziua->addDay())
