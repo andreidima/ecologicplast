@@ -53,43 +53,48 @@ export default {
             // monthBeforeYear: false,
         },
         // langString: 'ro',
+        // disabledDates: {
+        //         weekdays: [1, 7]
+        // }
     }
   },
     methods: {
-      notDates(date) {
-        // selectare data doar din interval
-        if ((typeof this.notBeforeDate !== 'undefined') && (typeof this.notAfterDate !== 'undefined')){
-          const notBefore = new Date(this.notBeforeDate);
-          notBefore.setHours(0, 0, 0, 0);
+        notDates(date) {
+            // selectare data doar din interval
+            if ((typeof this.notBeforeDate !== 'undefined') && (typeof this.notAfterDate !== 'undefined')){
+            const notBefore = new Date(this.notBeforeDate);
+            notBefore.setHours(0, 0, 0, 0);
 
-          const notAfter = new Date(this.notAfterDate);
-          notAfter.setHours(0, 0, 0, 0);
+            const notAfter = new Date(this.notAfterDate);
+            notAfter.setHours(0, 0, 0, 0);
 
-          return ((date.getTime() < notBefore.getTime()) || (date.getTime() > notAfter.getTime()));
-        }
-        // selectare date doar de la un moment dat
-        if (typeof this.notBeforeDate !== 'undefined'){
-          const notBefore = new Date(this.notBeforeDate);
-          notBefore.setHours(0, 0, 0, 0);
-          return (date.getTime() < notBefore.getTime());
-        }
+            return ((date.getTime() < notBefore.getTime()) || (date.getTime() > notAfter.getTime()));
+            }
+            // selectare date doar de la un moment dat
+            if (typeof this.notBeforeDate !== 'undefined'){
+            const notBefore = new Date(this.notBeforeDate);
+            notBefore.setHours(0, 0, 0, 0);
+            return (date.getTime() < notBefore.getTime());
+            }
 
-        // selectare date doar pana la un moment dat
-        if (typeof this.notAfterDate !== 'undefined'){
-          const notAfter = new Date(this.notAfterDate);
-          notAfter.setHours(0, 0, 0, 0);
+            // selectare date doar pana la un moment dat
+            if (typeof this.notAfterDate !== 'undefined'){
+            const notAfter = new Date(this.notAfterDate);
+            notAfter.setHours(0, 0, 0, 0);
 
-          return (date.getTime() > notAfter.getTime());
-        }
+            return (date.getTime() > notAfter.getTime());
+            }
 
-        // selectare doar 2 zile din saptamana
-        if ((typeof this.doarZiuaA !== 'undefined') && (typeof this.doarZiuaB !== 'undefined')){
-          const dateDay = date.getDay()
-          return ((dateDay !== this.doarZiuaA) && (dateDay !== this.doarZiuaB));
-        }
-      },
-        dataprogramare: function () {
-            this.$emit('dataprogramare', this.time);
+            // selectare doar 2 zile din saptamana
+            if ((typeof this.doarZiuaA !== 'undefined') && (typeof this.doarZiuaB !== 'undefined')){
+            const dateDay = date.getDay()
+            return ((dateDay !== this.doarZiuaA) && (dateDay !== this.doarZiuaB));
+            }
+        },
+        disabledDuminica (date) {
+            const day = new Date(date).getDay()
+            // return day === 0 || day === 6
+            return day === 0
         }
     },
     created() {
@@ -112,16 +117,16 @@ export default {
   <div>
     <input type="text" :name=numeCampDb v-model="time" v-show="false">
     <date-picker
-      v-model:value="time"
-      :type=tip
-      :value-type=valueType
-      :format=format
-      :minute-step=minuteStep
-      :hour-options="hours"
-      :editable="false"
-      :style=latime
-      :disabled-date="notDates"
-      :lang="langObject"
+        v-model:value="time"
+        :type=tip
+        :value-type=valueType
+        :format=format
+        :minute-step=minuteStep
+        :hour-options="hours"
+        :editable="true"
+        :disabled-date=disabledDuminica
+        :style=latime
+        :lang="langObject"
     >
     </date-picker>
   </div>

@@ -63,6 +63,7 @@
                         tip="datetime"
                         :hours="[8,9,10,11,12,13,14,15,16]"
                         :minute-step="10"
+                        {{-- disabled-date="disabledDuminica" --}}
                         value-type="YYYY-MM-DD HH:mm"
                         format="DD-MM-YYYY HH:mm"
                         :latime="{ width: '170px' }"
