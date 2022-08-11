@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProgramareController;
+use App\Http\Controllers\MesajTrimisSmsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,5 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('programari/afisare-calendar', [ProgramareController::class, 'index'])->name('programari.afisareCalendar');
     Route::resource('/programari', ProgramareController::class,  ['parameters' => ['programari' => 'programare']]);
+
+    Route::resource('mesaje-trimise-sms', MesajTrimisSmsController::class,  ['parameters' => ['mesaje_trimise_sms' => 'mesaj_trimis_sms']]);
 });
 

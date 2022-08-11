@@ -76,6 +76,19 @@
                                 <i class="fa-solid fa-calendar-days me-1"></i>Calendar
                             </a>
                         </li>
+                        <li class="nav-item me-3 dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bars me-1"></i>
+                                Utile
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('mesaje-trimise-sms.index') }}">
+                                        SMS trimise
+                                    </a>
+                                </li>
+                            </div>
+                        </li>
                     </ul>
                     </ul>
 

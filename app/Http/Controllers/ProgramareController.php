@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Models\Programare;
 
+use App\Traits\TrimiteSmsTrait;
+
 class ProgramareController extends Controller
 {
+    use TrimiteSmsTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -121,6 +125,14 @@ class ProgramareController extends Controller
     public function store(Request $request)
     {
         $programare = Programare::create($this->validateRequest($request));
+
+        $mesaj = 'Programarea pentru masina \'' . $programare->nr_auto . '\' a fost inregistrata. ' .
+                    'Va asteptam la service in data de ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('DD.MM.YYYY') .
+                    ', la ora ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('HH:mm') . '. ' .
+                    'Cu stima, AutoGNS +40723114595!';
+        // Referitor la diacritice, puteti face conversia unui string cu diacritice intr-unul fara diacritice, in mod automatizat cu aceasta functie PHP:
+        $mesaj = \Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', \Transliterator::FORWARD)->transliterate($mesaj);
+        $this->trimiteSms('programari', null, $programare->id, [$programare->telefon], $mesaj);
 
         return redirect($request->session()->get('programare_return_url') ?? ('/programari'))
             ->with('status', 'Programarea pentru mașina „' . ($programare->masina ?? '') . '” a fost adăugată cu succes!');
