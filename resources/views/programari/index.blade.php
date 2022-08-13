@@ -143,7 +143,8 @@
                                 <th class="text-center px-3">Mașină/ Telefon</th>
                                 <th class="text-center">Lucrare</th>
                                 <th class="text-center">Tip lucrare</th>
-                                <th class="text-center"><i class="fa-solid fa-car"></i></th>
+                                <th class="text-center"><i class="fa-solid fa-car fs-4"></i></th>
+                                <th class="text-center"><span style="font-size: 100%">Conf.</span><i class="fa-solid fa-comment-sms fs-4"></i></th>
                                 <th class="text-center">Operator</th>
                                 <th class="text-end">Acțiuni</th>
                             </tr>
@@ -198,6 +199,41 @@
                                             @default
 
                                         @endswitch
+                                    </td>
+                                    <td class="text-center">
+                                        <div>
+                                            @if (is_null($programare->confirmare))
+                                                {{-- <span class="text-warning">?</span> --}}
+                                                <i class="fa-solid fa-question text-warning fs-4"></i>
+                                            @elseif ($programare->confirmare == 0)
+                                                {{-- <span class="text-danger">NU</span> --}}
+                                                <i class="fa-solid fa-thumbs-down text-danger fs-4" title="{{ \Carbon\Carbon::parse($programare->confirmare_client_timestamp)->isoFormat('DD.MM.YYYY HH:mm') }}"></i>
+                                            @elseif ($programare->confirmare == 1)
+                                                {{-- <span class="text-success">DA</span> --}}
+                                                <i class="fa-solid fa-thumbs-up text-success fs-4" title="{{ \Carbon\Carbon::parse($programare->confirmare_client_timestamp)->isoFormat('DD.MM.YYYY HH:mm') }}"></i>
+                                            @endif
+                                            @if (auth()->user()->id === 1)
+                                                {{-- <br> --}}
+                                                <a href="/programare-cerere-confirmare-sms/{{$programare->cheie_unica}}" class="flex me-1" title="Cere Confirmare">
+                                                    C
+                                                </a>
+                                            @endif
+                                        </div>
+                                        <div style="white-space: nowrap;">
+                                            <span class="bg-secondary text-white px-1" title="Smsuri inregistrare confirmare finalizare trimise" style="">
+                                                {{ $programare->sms_inregistrare_trimis->count() }}
+                                                {{ $programare->sms_confirmare_trimis->count() }}
+                                                {{ $programare->sms_finalizare_trimis->count() }}
+                                            </span>
+                                        </div>
+                                        {{-- <div style="white-space: nowrap;">
+                                            <span class="bg-secondary text-white px-1" title="Smsuri " style="">{{ $programare->smsuri->where('subcategorie', 'inregistrare')->where('trimis', 0)->count() }}</span>
+                                            <span class="bg-secondary text-white px-1" title="Smsuri " style="">{{ $programare->smsuri->where('subcategorie', 'confirmare')->where('trimis', 0)->count() }}</span>
+                                            <span class="bg-secondary text-white px-1" title="Smsuri " style="">{{ $programare->smsuri->where('subcategorie', 'finalizare')->where('trimis', 0)->count() }}</span>
+                                        </div> --}}
+                                        {{-- @foreach ($programare->smsuri as $sms)
+
+                                        @endforeach --}}
                                     </td>
                                     <td>
                                         {{ $programare->user->name ?? '' }}

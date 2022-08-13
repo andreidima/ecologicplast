@@ -133,23 +133,34 @@
             </div>
         </nav>
     </header>
+    @else
+    {{-- <header style="min-height:86.5px; background-image: linear-gradient(#FFFFFF, #CDEFFF);"> --}}
+    <header class="py-1 culoare1 d-flex justify-content-left" style="">
+        <div class="container" style="display: inline-block">
+                <img src="{{ asset('imagini/autogns-logo-01-2048x482.png') }}" class="bg-white"
+                    style="width: auto; height: auto; max-width: 100%; max-height: 100px;">
+        </div>
+    </header>
     @endauth
 
     <main class="flex-shrink-0 py-4">
         @yield('content')
     </main>
 
-    {{-- <footer class="mt-auto py-3 bg-light text-center">
+    <footer class="mt-auto py-4 text-center text-white culoare1">
         <div class="">
-            <span class="text-muted border-top">
-                <a href="https://validsoftware.ro/dezvoltare-aplicatii-web-personalizate/" target="_blank">
+            <p class="">
+                © Auto GNS - Servicii Auto și Vulcanizare
+            </p>
+            <span class="text-white">
+                <a href="https://validsoftware.ro/dezvoltare-aplicatii-web-personalizate/" class="text-white" target="_blank">
                     Aplicație web</a>
                 dezvoltată de
-                <a href="https://validsoftware.ro/" target="_blank">
+                <a href="https://validsoftware.ro/" class="text-white" target="_blank">
                     validsoftware.ro
                 </a>
             </span>
         </div>
-    </footer> --}}
+    </footer>
 </body>
 </html>

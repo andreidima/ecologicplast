@@ -21,4 +21,39 @@ class Programare extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function smsuri()
+    {
+        return $this->hasMany(MesajTrimisSms::class, 'referinta_id', 'id')->where('categorie', 'programari');
+    }
+
+    public function sms_inregistrare()
+    {
+        return $this->hasMany(MesajTrimisSms::class, 'referinta_id', 'id')->where('categorie', 'programari')->where('subcategorie', 'inregistrare');
+    }
+
+    public function sms_confirmare()
+    {
+        return $this->hasMany(MesajTrimisSms::class, 'referinta_id', 'id')->where('categorie', 'programari')->where('subcategorie', 'confirmare');
+    }
+
+    public function sms_finalizare()
+    {
+        return $this->hasMany(MesajTrimisSms::class, 'referinta_id', 'id')->where('categorie', 'programari')->where('subcategorie', 'finalizare');
+    }
+
+    public function sms_inregistrare_trimis()
+    {
+        return $this->hasMany(MesajTrimisSms::class, 'referinta_id', 'id')->where('categorie', 'programari')->where('subcategorie', 'inregistrare')->where('trimis', 1);
+    }
+
+    public function sms_confirmare_trimis()
+    {
+        return $this->hasMany(MesajTrimisSms::class, 'referinta_id', 'id')->where('categorie', 'programari')->where('subcategorie', 'confirmare')->where('trimis', 1);
+    }
+
+    public function sms_finalizare_trimis()
+    {
+        return $this->hasMany(MesajTrimisSms::class, 'referinta_id', 'id')->where('categorie', 'programari')->where('subcategorie', 'finalizare')->where('trimis', 1);
+    }
 }

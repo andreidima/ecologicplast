@@ -90,7 +90,7 @@
             <div class="col-lg-8 mb-5 mx-auto">
                 <label for="lucrare" class="form-label mb-0 ps-3">Lucrare</label>
                 <textarea class="form-control bg-white {{ $errors->has('lucrare') ? 'is-invalid' : '' }}"
-                    name="lucrare" rows="5">{{ old('lucrare', $programare->lucrare) }}</textarea>
+                    name="lucrare" rows="4">{{ old('lucrare', $programare->lucrare) }}</textarea>
             </div>
             <div class="col-lg-4 mb-5 ps-s mx-auto d-flex align-items-center">
                 <div>
@@ -114,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 mb-5 ps-s mx-auto d-flex align-items-center" style="">
+            <div class="col-lg-2 mb-5 ps-s mx-auto d-flex align-items-center" style="">
                 <div>
                     Piese:
                     <br>
@@ -166,7 +166,27 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 mb-5 mx-auto">
+            <div class="col-lg-2 mb-5 ps-s mx-auto d-flex">
+                <div>
+                    Confirmare:
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="1" name="confirmare" id="confirmare_da"
+                            {{ old('confirmare', $programare->confirmare) == '1' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="confirmare_da"><i class="fa-solid fa-thumbs-up text-success fs-4"></i></i></label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="0" name="confirmare" id="confirmare_nu"
+                            {{ old('confirmare', $programare->confirmare) == '0' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="confirmare_nu"><i class="fa-solid fa-thumbs-down text-danger fs-4"></i></i></label>
+                    </div>
+                    <div class="form-check px-4">
+                        <input class="form-check-input" type="radio" value="" name="confirmare" id="confirmare_nesetat"
+                            {{ old('confirmare', $programare->confirmare) == '' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="confirmare_nesetat"><i class="fa-solid fa-question text-dark fs-4"></i></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 mb-5 mx-auto">
                 <label for="observatii" class="form-label mb-0 ps-3">Observații</label>
                 <textarea class="form-control bg-white {{ $errors->has('observatii') ? 'is-invalid' : '' }}"
                     name="observatii" rows="4">{{ old('observatii', $programare->observatii) }}</textarea>

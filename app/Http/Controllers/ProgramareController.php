@@ -35,7 +35,7 @@ class ProgramareController extends Controller
                     break;
             }
 
-            $programari = Programare::with('user')
+            $programari = Programare::with('user', 'smsuri')
                 ->when($search_client, function ($query, $search_client) {
                     return $query->where('client', 'like', '%' . $search_client . '%');
                 })
@@ -126,13 +126,22 @@ class ProgramareController extends Controller
     {
         $programare = Programare::create($this->validateRequest($request));
 
+        // Trimitere Sms la inregistrare
         $mesaj = 'Programarea pentru masina \'' . $programare->nr_auto . '\' a fost inregistrata. ' .
                     'Va asteptam la service in data de ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('DD.MM.YYYY') .
                     ', la ora ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('HH:mm') . '. ' .
                     'Cu stima, AutoGNS +40723114595!';
         // Referitor la diacritice, puteti face conversia unui string cu diacritice intr-unul fara diacritice, in mod automatizat cu aceasta functie PHP:
         $mesaj = \Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', \Transliterator::FORWARD)->transliterate($mesaj);
-        $this->trimiteSms('programari', null, $programare->id, [$programare->telefon], $mesaj);
+        $this->trimiteSms('programari', 'inregistrare', $programare->id, [$programare->telefon], $mesaj);
+
+        // Trimitere sms la finalozare lucrare
+        if (($request->stare_masina == 3) && (!$programare->sms_finalizare->count())){
+            $mesaj = 'Masina dumneavoastra este gata si o puteti ridica de la service. Cu stima, AutoGNS +40723114595!';
+            // Referitor la diacritice, puteti face conversia unui string cu diacritice intr-unul fara diacritice, in mod automatizat cu aceasta functie PHP:
+            $mesaj = \Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', \Transliterator::FORWARD)->transliterate($mesaj);
+            $this->trimiteSms('programari', 'finalizare', $programare->id, [$programare->telefon], $mesaj);
+        }
 
         return redirect($request->session()->get('programare_return_url') ?? ('/programari'))
             ->with('status', 'Programarea pentru mașina „' . ($programare->masina ?? '') . '” a fost adăugată cu succes!');
@@ -176,6 +185,14 @@ class ProgramareController extends Controller
     {
         $programare->update($this->validateRequest($request));
 
+        // Trimitere sms la finalozare lucrare
+        if (($request->stare_masina == 3) && (!$programare->sms_finalizare->count())){
+            $mesaj = 'Masina dumneavoastra cu numarul ' . $programare->nr_auto . ' este gata si o puteti ridica de la service. Cu stima, AutoGNS +40723114595!';
+            // Referitor la diacritice, puteti face conversia unui string cu diacritice intr-unul fara diacritice, in mod automatizat cu aceasta functie PHP:
+            $mesaj = \Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', \Transliterator::FORWARD)->transliterate($mesaj);
+            $this->trimiteSms('programari', 'finalizare', $programare->id, [$programare->telefon], $mesaj);
+        }
+
         return redirect($request->session()->get('programare_return_url') ?? ('/programari'))
             ->with('status', 'Programarea pentru mașina „' . ($programare->masina ?? '') . '” a fost modificată cu succes!');
     }
@@ -202,9 +219,11 @@ class ProgramareController extends Controller
     protected function validateRequest(Request $request)
     {
         $request->request->add(['user_id' => $request->user()->id]);
-        // if (is_null($request->data_ora_finalizare)){
-        //     $request->data_ora_finalizare = $request->data_ora_programare;
-        // }
+
+        if ($request->isMethod('post')) {
+            $request->request->add(['cheie_unica' => uniqid()]);
+        }
+
         return $request->validate(
             [
                 'client' => 'required|max:500',
@@ -221,7 +240,9 @@ class ProgramareController extends Controller
                 'piese' => '',
                 'stare_masina' => '',
                 'observatii' => 'nullable|max:2000',
-                'user_id' => ''
+                'user_id' => '',
+                'confirmare' => '',
+                'cheie_unica' => ''
             ],
             [
 
