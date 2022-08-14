@@ -56,4 +56,9 @@ class Programare extends Model
     {
         return $this->hasMany(MesajTrimisSms::class, 'referinta_id', 'id')->where('categorie', 'programari')->where('subcategorie', 'finalizare')->where('trimis', 1);
     }
+
+    public function programare_istoric()
+    {
+        return $this->hasMany(ProgramareIstoric::class, 'id', 'id');
+    }
 }
