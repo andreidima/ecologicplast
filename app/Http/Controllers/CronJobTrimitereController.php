@@ -22,14 +22,17 @@ class CronJobTrimitereController extends Controller
 
             $search_data = Carbon::today()->todatestring();
 
-            $programari = Programare::whereNotNull('data_ora_programare')
+            $programari = Programare::
+                // whereNotNull('data_ora_programare')
+                whereDate('data_ora_programare', '=', Carbon::tomorrow()->todatestring())
                 ->whereDate('created_at', '<', Carbon::today()->todatestring())
-                ->whereDate('data_ora_programare', '=', Carbon::tomorrow()->todatestring())
                 ->where('stare_masina', 0) // masina nu este deja in service
                 ->doesntHave('sms_confirmare') // sms-ul nu a fost deja trimis
+                ->whereNull('confirmare') // confirmate deja de administratorii aplicatiei
                 ->get();
 
             foreach ($programari as $programare){
+                // echo $programare->id . '<br>';
                 $mesaj = 'Accesati ' . url('/status-programare/' . $programare->cheie_unica) . ', pentru a confirma sau anula programarea din ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('DD.MM.YYYY') .
                             ', ora ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('HH:mm') .
                             '. AutoGNS +40723114595!';
