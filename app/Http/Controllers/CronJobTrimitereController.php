@@ -25,6 +25,7 @@ class CronJobTrimitereController extends Controller
             $programari = Programare::whereNotNull('data_ora_programare')
                 ->whereDate('created_at', '<', Carbon::today()->todatestring())
                 ->whereDate('data_ora_programare', '=', Carbon::tomorrow()->todatestring())
+                ->where('stare_masina', 0) // sms-ul nu a fost deja trimis
                 ->doesntHave('sms_confirmare') // sms-ul nu a fost deja trimis
                 ->get();
 
