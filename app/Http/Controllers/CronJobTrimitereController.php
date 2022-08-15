@@ -23,24 +23,8 @@ class CronJobTrimitereController extends Controller
             $search_data = Carbon::today()->todatestring();
 
             $programari = Programare::whereNotNull('data_ora_programare')
-                ->whereDate('data_ora_programare', '<', $search_data)
-                when($search_data, function ($query, $search_data) {
-                    $query->where(function($query) use ($search_data){
-                        $query->where(function($query) use ($search_data){
-                            $query->whereNull('data_ora_programare')
-                                ->whereDate('data_ora_finalizare', '=', $search_data);
-                        });
-                        $query->orwhere(function($query) use ($search_data){
-                            $query->whereNull('data_ora_finalizare')
-                                ->whereDate('data_ora_programare', '=', $search_data);
-                        });
-                        $query->orwhere(function($query) use ($search_data){
-                            $query->whereDate('data_ora_programare', '<=', $search_data)
-                                ->whereDate('data_ora_finalizare', '>=', $search_data);
-                        });
-                    })
-                    ->orderBy('data_ora_programare');
-                })
+                ->whereDate('created_at', '<', Carbon::today()->todatestring())
+                ->whereDate('data_ora_programare', '=', Carbon::tomorrow()->todatestring())
                 ->doesntHave('sms_confirmare') // sms-ul nu a fost deja trimis
                 ->get();
 

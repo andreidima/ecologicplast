@@ -35,7 +35,8 @@ class ProgramareController extends Controller
                     break;
             }
 
-            $programari = Programare::with('user', 'smsuri', 'programare_istoric')
+            // $programari = Programare::with('user', 'smsuri', 'programare_istoric')
+            $programari = Programare::with('user', 'smsuri', 'programare_istoric:id_pk,id,confirmare,confirmare_client_timestamp')
                 ->when($search_client, function ($query, $search_client) {
                     return $query->where('client', 'like', '%' . $search_client . '%');
                 })

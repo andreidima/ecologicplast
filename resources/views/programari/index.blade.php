@@ -202,18 +202,38 @@
                                     </td>
                                     <td class="text-center">
                                         <div>
-                                            @if (is_null($programare->confirmare))
-                                                {{-- <span class="text-warning">?</span> --}}
+                                            @php
+                                                $mesaj = '';
+                                                if (is_null($programare->confirmare)){
+                                                    $mesaj .= '<i class="fa-solid fa-question text-warning fs-4"></i>';
+                                                } else if ($programare->confirmare == 0){
+                                                    $mesaj .= '<i class="fa-solid fa-thumbs-down text-danger fs-4" title="';
+                                                } else if ($programare->confirmare == 1){
+                                                    $mesaj .= '<i class="fa-solid fa-thumbs-up text-success fs-4" title="';
+                                                }
+                                                if (!is_null($programare->confirmare)){
+                                                    foreach ($programare->programare_istoric->where('confirmare_client_timestamp')->unique('confirmare_client_timestamp') as $programare_istoric){
+                                                    $mesaj .= \Carbon\Carbon::parse($programare_istoric->confirmare_client_timestamp)->isoFormat('DD.MM.YYYY HH:mm');
+                                                        if ($programare_istoric->confirmare === 0){
+                                                            $mesaj .= ' NU --- ';
+                                                        }
+                                                        if ($programare_istoric->confirmare === 1){
+                                                            $mesaj .= ' DA --- ';
+                                                        }
+                                                    }
+                                                    $mesaj = substr_replace($mesaj ,"", -5); // remove last ---
+                                                    $mesaj .='"></i>';
+                                                }
+                                            @endphp
+                                            {!! $mesaj !!}
+                                            {{-- @if (is_null($programare->confirmare))
                                                 <i class="fa-solid fa-question text-warning fs-4"></i>
                                             @elseif ($programare->confirmare == 0)
-                                                {{-- <span class="text-danger">NU</span> --}}
                                                 <i class="fa-solid fa-thumbs-down text-danger fs-4" title="{{ \Carbon\Carbon::parse($programare->confirmare_client_timestamp)->isoFormat('DD.MM.YYYY HH:mm') }}"></i>
                                             @elseif ($programare->confirmare == 1)
-                                                {{-- <span class="text-success">DA</span> --}}
                                                 <i class="fa-solid fa-thumbs-up text-success fs-4" title="{{ \Carbon\Carbon::parse($programare->confirmare_client_timestamp)->isoFormat('DD.MM.YYYY HH:mm') }}"></i>
-                                            @endif
+                                            @endif --}}
                                             @if (auth()->user()->id === 1)
-                                                {{-- <br> --}}
                                                 <a href="/programare-cerere-confirmare-sms/{{$programare->cheie_unica}}" class="flex me-1" title="Cere Confirmare">
                                                     C
                                                 </a>
@@ -221,9 +241,9 @@
                                         </div>
                                         <div style="white-space: nowrap;">
                                             <span class="bg-secondary text-white px-1" title="Smsuri inregistrare confirmare finalizare trimise" style="">
-                                                {{ $programare->sms_inregistrare_trimis->count() }}
-                                                {{ $programare->sms_confirmare_trimis->count() }}
-                                                {{ $programare->sms_finalizare_trimis->count() }}
+                                                {{ $programare->smsuri->where('categorie', 'programari')->where('subcategorie', 'inregistrare')->where('trimis', 1)->count() }}
+                                                {{ $programare->smsuri->where('categorie', 'programari')->where('subcategorie', 'confirmare')->where('trimis', 1)->count() }}
+                                                {{ $programare->smsuri->where('categorie', 'programari')->where('subcategorie', 'finalizare')->where('trimis', 1)->count() }}
                                             </span>
                                         </div>
                                         {{-- <div style="white-space: nowrap;">
