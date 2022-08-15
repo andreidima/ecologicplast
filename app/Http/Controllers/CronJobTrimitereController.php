@@ -28,21 +28,18 @@ class CronJobTrimitereController extends Controller
                 ->where('stare_masina', 0) // masina nu este deja in service
                 ->doesntHave('sms_confirmare') // sms-ul nu a fost deja trimis
                 ->get();
-// dd($programari);
+
             foreach ($programari as $programare){
-                echo $programare->stare_masina;
-                // $mesaj = 'Accesati ' . url('/status-programare/' . $programare->cheie_unica) . ', pentru a confirma sau anula programarea din ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('DD.MM.YYYY') .
-                //             ', ora ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('HH:mm') .
-                //             '. AutoGNS +40723114595!';
-                // // Referitor la diacritice, puteti face conversia unui string cu diacritice intr-unul fara diacritice, in mod automatizat cu aceasta functie PHP:
-                // $mesaj = \Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', \Transliterator::FORWARD)->transliterate($mesaj);
-                // $this->trimiteSms('programari', 'confirmare', $programare->id, [$programare->telefon], $mesaj);
+                $mesaj = 'Accesati ' . url('/status-programare/' . $programare->cheie_unica) . ', pentru a confirma sau anula programarea din ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('DD.MM.YYYY') .
+                            ', ora ' . \Carbon\Carbon::parse($programare->data_ora_programare)->isoFormat('HH:mm') .
+                            '. AutoGNS +40723114595!';
+                // Referitor la diacritice, puteti face conversia unui string cu diacritice intr-unul fara diacritice, in mod automatizat cu aceasta functie PHP:
+                $mesaj = \Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', \Transliterator::FORWARD)->transliterate($mesaj);
+                $this->trimiteSms('programari', 'confirmare', $programare->id, [$programare->telefon], $mesaj);
             }
 
-            // return redirect('/clienti')->with('status', 'Cron Joburile de astăzi au fost trimise!' . $cron_jobs->count());
         } else {
             echo 'Cheia pentru Cron Joburi nu este corectă!';
-            // return redirect('/clienti')->with('error', 'Cron Joburile de astăzi nu fost trimise! Cheia ' . $key . ' nu este validă');
         }
 
     }
