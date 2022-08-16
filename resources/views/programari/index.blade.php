@@ -36,6 +36,7 @@
                                     <vue-datepicker-next
                                         data-veche="{{ $search_data }}"
                                         nume-camp-db="search_data"
+                                        :zile-nelucratoare="{{ App\Models\ZiNelucratoare::select('data')->get()->pluck('data') }}"
                                         tip="date"
                                         value-type="YYYY-MM-DD"
                                         format="DD-MM-YYYY"

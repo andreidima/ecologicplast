@@ -87,6 +87,12 @@
                                         SMS trimise
                                     </a>
                                 </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('zile-nelucratoare.index') }}">
+                                        Zile nelucrătoare
+                                    </a>
+                                </li>
                             </div>
                         </li>
                     </ul>

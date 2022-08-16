@@ -10,6 +10,7 @@ export default {
   props: [
     'dataVeche',
     'numeCampDb',
+    'zileNelucratoare',
     'tip',
     'valueType',
     'format',
@@ -60,42 +61,56 @@ export default {
   },
     methods: {
         notDates(date) {
+            // Se blocheaza toate zilele nelucratoare venite din MySQL || se blocheaza ziua de duminica
+            var zileNelucratoare = (typeof this.zileNelucratoare !== 'undefined') ? this.zileNelucratoare : []; // se defineste un array gol daca lipseste prop, ca sa nu dea eroare
+            zileNelucratoare = zileNelucratoare.map(element => { // Se formateaza toate elementele venite din MySQL la formatul DateString
+                return new Date(element).toDateString();
+            });
+            return (zileNelucratoare.includes(date.toDateString()) ? date : '') || new Date(date).getDay() === 0;
+
+
+            // Blocare zile din saptamana
+            // const day = new Date(date).getDay()
+            // // return day === 0 || day === 6
+            // return day === 0 // blocare duminica
+
             // selectare data doar din interval
-            if ((typeof this.notBeforeDate !== 'undefined') && (typeof this.notAfterDate !== 'undefined')){
-            const notBefore = new Date(this.notBeforeDate);
-            notBefore.setHours(0, 0, 0, 0);
+            // if ((typeof this.notBeforeDate !== 'undefined') && (typeof this.notAfterDate !== 'undefined')){
+            //     const notBefore = new Date(this.notBeforeDate);
+            //     notBefore.setHours(0, 0, 0, 0);
 
-            const notAfter = new Date(this.notAfterDate);
-            notAfter.setHours(0, 0, 0, 0);
+            //     const notAfter = new Date(this.notAfterDate);
+            //     notAfter.setHours(0, 0, 0, 0);
 
-            return ((date.getTime() < notBefore.getTime()) || (date.getTime() > notAfter.getTime()));
-            }
+            //     return ((date.getTime() < notBefore.getTime()) || (date.getTime() > notAfter.getTime()));
+            // }
+
             // selectare date doar de la un moment dat
-            if (typeof this.notBeforeDate !== 'undefined'){
-            const notBefore = new Date(this.notBeforeDate);
-            notBefore.setHours(0, 0, 0, 0);
-            return (date.getTime() < notBefore.getTime());
-            }
+            // if (typeof this.notBeforeDate !== 'undefined'){
+            //     const notBefore = new Date(this.notBeforeDate);
+            //     notBefore.setHours(0, 0, 0, 0);
+            //     return (date.getTime() < notBefore.getTime());
+            // }
 
             // selectare date doar pana la un moment dat
-            if (typeof this.notAfterDate !== 'undefined'){
-            const notAfter = new Date(this.notAfterDate);
-            notAfter.setHours(0, 0, 0, 0);
+            // if (typeof this.notAfterDate !== 'undefined'){
+            //     const notAfter = new Date(this.notAfterDate);
+            //     notAfter.setHours(0, 0, 0, 0);
 
-            return (date.getTime() > notAfter.getTime());
-            }
+            //     return (date.getTime() > notAfter.getTime());
+            // }
 
             // selectare doar 2 zile din saptamana
-            if ((typeof this.doarZiuaA !== 'undefined') && (typeof this.doarZiuaB !== 'undefined')){
-            const dateDay = date.getDay()
-            return ((dateDay !== this.doarZiuaA) && (dateDay !== this.doarZiuaB));
-            }
+            // if ((typeof this.doarZiuaA !== 'undefined') && (typeof this.doarZiuaB !== 'undefined')){
+            //     const dateDay = date.getDay()
+            //     return ((dateDay !== this.doarZiuaA) && (dateDay !== this.doarZiuaB));
+            // }
         },
-        disabledDuminica (date) {
-            const day = new Date(date).getDay()
-            // return day === 0 || day === 6
-            return day === 0
-        }
+        // disabledDuminica (date) {
+        //     const day = new Date(date).getDay()
+        //     // return day === 0 || day === 6
+        //     return day === 0
+        // }
     },
     created() {
         if (this.dataVeche == "") {
@@ -124,7 +139,7 @@ export default {
         :minute-step=minuteStep
         :hour-options="hours"
         :editable="true"
-        :disabled-date=disabledDuminica
+        :disabled-date=notDates
         :style=latime
         :lang="langObject"
     >

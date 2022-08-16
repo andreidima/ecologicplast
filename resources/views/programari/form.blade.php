@@ -1,6 +1,6 @@
 @csrf
 
-<div class="row mb-0 p-3 d-flex border-radius: 0px 0px 40px 40px" id="app">
+<div class="row mb-0 p-3 d-flex border-radius: 0px 0px 40px 40px">
     <div class="col-lg-12 mb-0">
 
         <div class="row mb-0" id="programari">
@@ -54,16 +54,20 @@
                     value="{{ old('nr_auto', $programare->nr_auto) }}"
                     required>
             </div>
+            @php
+                // $zile_nelucratoare = App\Models\ZiNelucratoare::select('data')->get()->pluck('data');
+                // dd(App\Models\ZiNelucratoare::select('data')->get()->pluck('data'));
+            @endphp
             <div class="col-lg-3 mb-5 mx-auto d-flex justify-content-start">
                 <div>
                     <label for="data_ora_programare" class="mb-0 ps-xxl-2"><small>Dată și oră programare</small></label>
                     <vue-datepicker-next
                         data-veche="{{ old('data_ora_programare', ($programare->data_ora_programare ?? '')) }}"
                         nume-camp-db="data_ora_programare"
+                        :zile-nelucratoare="{{ App\Models\ZiNelucratoare::select('data')->get()->pluck('data') }}"
                         tip="datetime"
                         :hours="[8,9,10,11,12,13,14,15,16]"
                         :minute-step="10"
-                        {{-- disabled-date="disabledDuminica" --}}
                         value-type="YYYY-MM-DD HH:mm"
                         format="DD-MM-YYYY HH:mm"
                         :latime="{ width: '170px' }"
@@ -77,6 +81,7 @@
                     <vue-datepicker-next
                         data-veche="{{ old('data_ora_finalizare', ($programare->data_ora_finalizare ?? '')) }}"
                         nume-camp-db="data_ora_finalizare"
+                        :zile-nelucratoare="{{ App\Models\ZiNelucratoare::select('data')->get()->pluck('data') }}"
                         tip="datetime"
                         :hours="[8,9,10,11,12,13,14,15,16]"
                         :minute-step="10"

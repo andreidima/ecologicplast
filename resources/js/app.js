@@ -57,4 +57,7 @@ const programari = createApp({
         // 'example-component-2': VueDatepickerNext,
     },
 });
-programari.mount('#programari');
+
+// if (document.getElementById('programari') != null) {
+    programari.mount('#programari');
+// }

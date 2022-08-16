@@ -6,6 +6,7 @@ use App\Http\Controllers\ProgramareController;
 use App\Http\Controllers\ProgramareConfirmareController;
 use App\Http\Controllers\MesajTrimisSmsController;
 use App\Http\Controllers\CronJobTrimitereController;
+use App\Http\Controllers\ZiNelucratoareController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,9 +33,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('programari/afisare-calendar', [ProgramareController::class, 'index'])->name('programari.afisareCalendar');
     Route::resource('/programari', ProgramareController::class,  ['parameters' => ['programari' => 'programare']]);
 
-    Route::resource('mesaje-trimise-sms', MesajTrimisSmsController::class,  ['parameters' => ['mesaje_trimise_sms' => 'mesaj_trimis_sms']]);
+    Route::resource('mesaje-trimise-sms', MesajTrimisSmsController::class,  ['parameters' => ['mesaje-trimise-sms' => 'mesaj_trimis_sms']]);
+
+    Route::resource('zile-nelucratoare', ZiNelucratoareController::class)->parameters(['zile-nelucratoare' => 'zi_nelucratoare']);
 
     Route::get('programare-cerere-confirmare-sms/{programare:cheie_unica}', [ProgramareConfirmareController::class, 'cerereConfirmareSms']);
+
 
     // Route::get('creare-key-unice', function(){
     //     $programari = App\Models\Programare::all();
