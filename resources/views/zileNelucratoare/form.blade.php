@@ -9,7 +9,7 @@
                     <vue-datepicker-next
                         data-veche="{{ old('data', ($zi_nelucratoare->data ?? '')) }}"
                         nume-camp-db="data"
-                        {{-- :zile-nelucratoare="{{ App\Models\ZiNelucratoare::select('data')->get()->pluck('data') }}" --}}
+                        :zile-nelucratoare="{{ App\Models\ZiNelucratoare::select('data')->whereDate('data', '<>', ($zi_nelucratoare->data ?? '2000-01-01'))->get()->pluck('data') }}"
                         tip="date"
                         {{-- :hours="[8,9,10,11,12,13,14,15,16]" --}}
                         {{-- :minute-step="10" --}}

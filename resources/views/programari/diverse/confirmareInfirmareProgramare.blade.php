@@ -35,11 +35,17 @@
                                     </h5>
                                 @elseif ($programare->confirmare == 0)
                                     <h5 class="ps-3 py-2 mb-0 text-center bg bg-danger text-white">
-                                        Ați anulat programarea.
+                                        Ați anulat programarea!
+                                        <br>
+                                        <br>
+                                        <small>Vă mulțumim pentru răspuns. Vă așteptăm la service cu altă ocazie.</small>
                                     </h5>
                                 @elseif ($programare->confirmare == 1)
                                     <h5 class="ps-3 py-2 mb-0 text-center bg bg-success text-white">
                                         Ați confirmat programarea!
+                                        <br>
+                                        <br>
+                                        <small>Vă mulțumim pentru răspuns. Vă așteptăm la service.</small>
                                     </h5>
                                 @endif
                             </div>
@@ -101,28 +107,30 @@
                                     </div>
                                 </div>
 
-                                <div class="row mb-5 justify-content-center">
-                                    <div class="col-6 d-grid">
-                                        <form class="needs-validation d-grid px-1" novalidate method="GET" action="/status-programare/{{$programare->cheie_unica}}">
-                                            {{-- <div class="row custom-search-form justify-content-center"> --}}
-                                                <input type="hidden" name="confirmare" value="da">
-                                                <button class="btn btn-success text-white border border-dark rounded-3 shadow block" type="submit">
-                                                    Confirm programarea
-                                                </button>
-                                            {{-- </div> --}}
-                                        </form>
+                                @if (!$confirmat_deja)
+                                    <div class="row mb-5 justify-content-center">
+                                        <div class="col-6 d-grid">
+                                            <form class="needs-validation d-grid px-1" novalidate method="GET" action="/status-programare/{{$programare->cheie_unica}}">
+                                                {{-- <div class="row custom-search-form justify-content-center"> --}}
+                                                    <input type="hidden" name="confirmare" value="da">
+                                                    <button class="btn btn-success text-white border border-dark rounded-3 shadow block" type="submit">
+                                                        Confirm programarea
+                                                    </button>
+                                                {{-- </div> --}}
+                                            </form>
+                                        </div>
+                                        <div class="col-6 d-grid">
+                                            <form class="needs-validation d-grid px-1" novalidate method="GET" action="/status-programare/{{$programare->cheie_unica}}">
+                                                {{-- <div class="row custom-search-form justify-content-center"> --}}
+                                                    <input type="hidden" name="confirmare" value="nu">
+                                                    <button class="btn btn-danger text-white border border-dark rounded-3 shadow block" type="submit">
+                                                        Anulez programarea
+                                                    </button>
+                                                {{-- </div> --}}
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="col-6 d-grid">
-                                        <form class="needs-validation d-grid px-1" novalidate method="GET" action="/status-programare/{{$programare->cheie_unica}}">
-                                            {{-- <div class="row custom-search-form justify-content-center"> --}}
-                                                <input type="hidden" name="confirmare" value="nu">
-                                                <button class="btn btn-danger text-white border border-dark rounded-3 shadow block" type="submit">
-                                                    Anulez programarea
-                                                </button>
-                                            {{-- </div> --}}
-                                        </form>
-                                    </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     @endif

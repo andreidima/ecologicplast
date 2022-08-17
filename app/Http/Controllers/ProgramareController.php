@@ -243,7 +243,8 @@ class ProgramareController extends Controller
                 'observatii' => 'nullable|max:2000',
                 'user_id' => '',
                 'confirmare' => '',
-                'cheie_unica' => ''
+                'cheie_unica' => '',
+                'sms_revizie_ulei_filtre' => ''
             ],
             [
 

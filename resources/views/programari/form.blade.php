@@ -92,7 +92,7 @@
                     ></vue-datepicker-next>
                 </div>
             </div>
-            <div class="col-lg-8 mb-5 mx-auto">
+            <div class="col-lg-6 mb-5 mx-auto">
                 <label for="lucrare" class="form-label mb-0 ps-3">Lucrare</label>
                 <textarea class="form-control bg-white {{ $errors->has('lucrare') ? 'is-invalid' : '' }}"
                     name="lucrare" rows="4">{{ old('lucrare', $programare->lucrare) }}</textarea>
@@ -145,7 +145,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 mb-5 ps-s mx-auto d-flex align-items-end">
+            <div class="col-lg-3 mb-5 ps-s mx-auto d-flex">
                 <div>
                     Stare mașină:
                     <br>
@@ -191,10 +191,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 mb-5 mx-auto">
+            <div class="col-lg-4 mb-5 mx-auto">
                 <label for="observatii" class="form-label mb-0 ps-3">Observații</label>
                 <textarea class="form-control bg-white {{ $errors->has('observatii') ? 'is-invalid' : '' }}"
                     name="observatii" rows="4">{{ old('observatii', $programare->observatii) }}</textarea>
+            </div>
+            <div class="col-lg-3 mb-5 ps-s mx-auto d-flex align-items-center">
+                <div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="hidden" name="sms_revizie_ulei_filtre" value="0" />
+                        <input class="form-check-input" type="checkbox" value="1" name="sms_revizie_ulei_filtre" id="sms_revizie_ulei_filtre"
+                            {{ old('sms_revizie_ulei_filtre', $programare->sms_revizie_ulei_filtre) == '1' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="sms_revizie_ulei_filtre">Trimitere sms, o singură dată, după 1 an, pentru revizie ulei și filtre</label>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

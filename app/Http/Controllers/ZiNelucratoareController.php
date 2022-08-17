@@ -101,7 +101,7 @@ class ZiNelucratoareController extends Controller
     {
         $zi_nelucratoare->delete();
 
-        return back()->with('status', 'Ziua nelucrătoare „' . ($zi_nelucratoare->data ? Carbon::parse($zi_nelucratoare->data)->isoFormat('DD.MM.YYYY') : '') . ' a fost ștearsă cu succes!');
+        return back()->with('status', 'Ziua nelucrătoare „' . ($zi_nelucratoare->data ? Carbon::parse($zi_nelucratoare->data)->isoFormat('DD.MM.YYYY') : '') . '” a fost ștearsă cu succes!');
     }
 
     /**
