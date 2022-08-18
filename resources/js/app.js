@@ -46,18 +46,97 @@ import VueDatepickerNext from './components/DatePicker.vue';
 // }
 
 
-const programari = createApp({
+const carte = createApp({
+    el: '#carte',
     data() {
         return {
-            message: 'Hello root Component 1'
-        };
+            carti: carti,
+
+            autor_autocomplete: autor,
+            carti_lista_autor_autocomplete: [],
+            editura_autocomplete: editura,
+            carti_lista_editura_autocomplete: [],
+            loc_publicare_autocomplete: loc_publicare,
+            carti_lista_loc_publicare_autocomplete: [],
+            limba_autocomplete: limba,
+            carti_lista_limba_autocomplete: [],
+            tip_material_autocomplete: tip_material,
+            carti_lista_tip_material_autocomplete: [],
+            locatie_autocomplete: locatie,
+            carti_lista_locatie_autocomplete: [],
+            // fisa_de_tratament_id: fisaDeTratamentIdVechi,
+        }
     },
-    components: {
-        'vue-datepicker-next': VueDatepickerNext,
-        // 'example-component-2': VueDatepickerNext,
+    created: function () {
     },
+    methods: {
+        // Autocomplete pentru autor folosind carti trimise din start in vuejs
+        autorAutoComplete: function () {
+            this.carti_lista_autor_autocomplete = [];
+            if (this.autor_autocomplete.length > 2) {
+                for (var i = 0; i < this.carti.length; i++) {
+                    if (this.carti[i].autor.toLowerCase().includes(this.autor_autocomplete.toLowerCase())) {
+                        this.carti_lista_autor_autocomplete.push(this.carti[i]);
+                    }
+                }
+            }
+        },
+        // Autocomplete pentru editura folosind carti trimise din start in vuejs
+        edituraAutoComplete: function () {
+            this.carti_lista_editura_autocomplete = [];
+            if (this.editura_autocomplete.length > 2) {
+                for (var i = 0; i < this.carti.length; i++) {
+                    if (this.carti[i].editura.toLowerCase().includes(this.editura_autocomplete.toLowerCase())) {
+                        this.carti_lista_editura_autocomplete.push(this.carti[i]);
+                    }
+                }
+            }
+        },
+        // Autocomplete pentru loc_publicare folosind carti trimise din start in vuejs
+        loc_publicareAutoComplete: function () {
+            this.carti_lista_loc_publicare_autocomplete = [];
+            if (this.loc_publicare_autocomplete.length > 2) {
+                for (var i = 0; i < this.carti.length; i++) {
+                    if (this.carti[i].loc_publicare.toLowerCase().includes(this.loc_publicare_autocomplete.toLowerCase())) {
+                        this.carti_lista_loc_publicare_autocomplete.push(this.carti[i]);
+                    }
+                }
+            }
+        },
+        // Autocomplete pentru limba folosind carti trimise din start in vuejs
+        limbaAutoComplete: function () {
+            this.carti_lista_limba_autocomplete = [];
+            if (this.limba_autocomplete.length > 2) {
+                for (var i = 0; i < this.carti.length; i++) {
+                    if (this.carti[i].limba.toLowerCase().includes(this.limba_autocomplete.toLowerCase())) {
+                        this.carti_lista_limba_autocomplete.push(this.carti[i]);
+                    }
+                }
+            }
+        },
+        // Autocomplete pentru tip_material folosind carti trimise din start in vuejs
+        tip_materialAutoComplete: function () {
+            this.carti_lista_tip_material_autocomplete = [];
+            if (this.tip_material_autocomplete.length > 2) {
+                for (var i = 0; i < this.carti.length; i++) {
+                    if (this.carti[i].tip_material.toLowerCase().includes(this.tip_material_autocomplete.toLowerCase())) {
+                        this.carti_lista_tip_material_autocomplete.push(this.carti[i]);
+                    }
+                }
+            }
+        },
+        // Autocomplete pentru locatie folosind carti trimise din start in vuejs
+        locatieAutoComplete: function () {
+            this.carti_lista_locatie_autocomplete = [];
+            if (this.locatie_autocomplete.length > 2) {
+                for (var i = 0; i < this.carti.length; i++) {
+                    if (this.carti[i].locatie.toLowerCase().includes(this.locatie_autocomplete.toLowerCase())) {
+                        this.carti_lista_locatie_autocomplete.push(this.carti[i]);
+                    }
+                }
+            }
+        },
+    }
 });
 
-// if (document.getElementById('programari') != null) {
-    programari.mount('#programari');
-// }
+carte.mount('#carte');

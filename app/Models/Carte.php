@@ -5,15 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ZiNelucratoare extends Model
+class Carte extends Model
 {
     use HasFactory;
 
-    protected $table = 'zile_nelucratoare';
+    protected $table = 'carti';
     protected $guarded = [];
 
     public function path()
     {
-        return "/zile-nelucratoare/{$this->id}";
+        return "/carti/{$this->id}";
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

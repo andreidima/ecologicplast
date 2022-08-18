@@ -97,8 +97,9 @@
                         <div class="row mb-2">
                             <div class="col-md-7 d-grid gap-2 mx-auto">
 
-                                <button type="submit" class="btn btn-success mb-2 fs-5 shadow-sm rounded-3"
-                                    {{-- style="background-color:#00be49" --}}
+                                {{-- <button type="submit" class="btn btn-success mb-2 fs-5 shadow-sm rounded-3" --}}
+                                <button type="submit" class="btn text-white mb-2 fs-5 shadow-sm rounded-3"
+                                    style="background-color:#56af71"
                                 >
                                     {{ __('auth.Login') }}
                                 </button>

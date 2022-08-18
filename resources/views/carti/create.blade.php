@@ -7,7 +7,7 @@
             <div class="shadow-lg" style="border-radius: 40px 40px 40px 40px;">
                 <div class="border border-secondary p-2 culoare2" style="border-radius: 40px 40px 0px 0px;">
                     <span class="badge text-light fs-5">
-                        <i class="fa-solid fa-calendar-check me-1"></i>Modificare programare
+                        <i class="fa-solid fa-book me-1"></i>Adăugare carte
                     </span>
                 </div>
 
@@ -16,13 +16,12 @@
                 <div class="card-body py-2 border border-secondary"
                     style="border-radius: 0px 0px 40px 40px;"
                 >
-                    <form  class="needs-validation" novalidate method="POST" action="{{ $programare->path() }}">
-                        @method('PATCH')
+                    <form  class="needs-validation" novalidate method="POST" action="/carti">
 
-                                @include ('programari.form', [
-                                    'buttonText' => 'Modifică Programarea'
+                                @include ('carti.form', [
+                                    'carte' => new App\Models\Carte,
+                                    'buttonText' => 'Adaugă Cartea'
                                 ])
-
                     </form>
                 </div>
             </div>

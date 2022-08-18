@@ -7,7 +7,7 @@
             <div class="shadow-lg" style="border-radius: 40px 40px 40px 40px;">
                 <div class="border border-secondary p-2 culoare2" style="border-radius: 40px 40px 0px 0px;">
                     <span class="badge text-light fs-5">
-                        Modificare zi nelucrătoare
+                        <i class="fa-solid fa-book me-1"></i>Modificare carte
                     </span>
                 </div>
 
@@ -16,11 +16,11 @@
                 <div class="card-body py-2 border border-secondary"
                     style="border-radius: 0px 0px 40px 40px;"
                 >
-                    <form  class="needs-validation" novalidate method="POST" action="{{ $zi_nelucratoare->path() }}">
+                    <form  class="needs-validation" novalidate method="POST" action="{{ $carte->path() }}">
                         @method('PATCH')
 
-                                @include ('zileNelucratoare.form', [
-                                    'buttonText' => 'Modifică Ziua Nelucrătoare'
+                                @include ('carti.form', [
+                                    'buttonText' => 'Modifică Cartea'
                                 ])
 
                     </form>
