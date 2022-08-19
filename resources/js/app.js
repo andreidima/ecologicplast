@@ -52,31 +52,54 @@ const carte = createApp({
         return {
             carti: carti,
 
+            // carti_lista_autocomplete: [],
+
             autor_autocomplete: autor,
+            // autor: autor,
             carti_lista_autor_autocomplete: [],
             editura_autocomplete: editura,
             carti_lista_editura_autocomplete: [],
             loc_publicare_autocomplete: loc_publicare,
             carti_lista_loc_publicare_autocomplete: [],
+            subiecte_autocomplete: subiecte,
+            carti_lista_subiecte_autocomplete: [],
             limba_autocomplete: limba,
             carti_lista_limba_autocomplete: [],
             tip_material_autocomplete: tip_material,
             carti_lista_tip_material_autocomplete: [],
             locatie_autocomplete: locatie,
             carti_lista_locatie_autocomplete: [],
-            // fisa_de_tratament_id: fisaDeTratamentIdVechi,
         }
     },
     created: function () {
     },
     methods: {
+        autoComplete($value) {
+            this.carti_lista_autocomplete = [];
+            // var $value = this.$value.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            var camp = $value;
+            console.log(camp, this.camp);
+            // if (autor_autocomplete.length > 2) {
+            //     for (var i = 0; i < this.carti.length; i++) {
+            //         if (this.carti[i].autor && this.carti[i].autor.toLowerCase().includes(autor_autocomplete.toLowerCase())) {
+            //             this.carti_lista_autor_autocomplete.push(this.carti[i].autor);
+            //         }
+            //     }
+            // }
+        },
         // Autocomplete pentru autor folosind carti trimise din start in vuejs
         autorAutoComplete: function () {
             this.carti_lista_autor_autocomplete = [];
-            if (this.autor_autocomplete.length > 2) {
+            var autor_autocomplete = this.autor_autocomplete.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            if (autor_autocomplete.length > 2) {
                 for (var i = 0; i < this.carti.length; i++) {
-                    if (this.carti[i].autor.toLowerCase().includes(this.autor_autocomplete.toLowerCase())) {
-                        this.carti_lista_autor_autocomplete.push(this.carti[i]);
+                    if (this.carti[i].autor){
+                        for (const autor of this.carti[i].autor.split(/[\s,]+/)) {
+                            if (autor.toLowerCase().includes(autor_autocomplete.toLowerCase()) &&
+                                !this.carti_lista_autor_autocomplete.includes(autor) ) {
+                                this.carti_lista_autor_autocomplete.push(autor);
+                            }
+                        }
                     }
                 }
             }
@@ -84,10 +107,16 @@ const carte = createApp({
         // Autocomplete pentru editura folosind carti trimise din start in vuejs
         edituraAutoComplete: function () {
             this.carti_lista_editura_autocomplete = [];
-            if (this.editura_autocomplete.length > 2) {
+            var editura_autocomplete = this.editura_autocomplete.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            if (editura_autocomplete.length > 2) {
                 for (var i = 0; i < this.carti.length; i++) {
-                    if (this.carti[i].editura.toLowerCase().includes(this.editura_autocomplete.toLowerCase())) {
-                        this.carti_lista_editura_autocomplete.push(this.carti[i]);
+                    if (this.carti[i].editura) {
+                        for (const editura of this.carti[i].editura.split(/[\s,]+/)) {
+                            if (editura.toLowerCase().includes(editura_autocomplete.toLowerCase()) &&
+                                !this.carti_lista_editura_autocomplete.includes(editura)) {
+                                this.carti_lista_editura_autocomplete.push(editura);
+                            }
+                        }
                     }
                 }
             }
@@ -95,10 +124,33 @@ const carte = createApp({
         // Autocomplete pentru loc_publicare folosind carti trimise din start in vuejs
         loc_publicareAutoComplete: function () {
             this.carti_lista_loc_publicare_autocomplete = [];
-            if (this.loc_publicare_autocomplete.length > 2) {
+            var loc_publicare_autocomplete = this.loc_publicare_autocomplete.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            if (loc_publicare_autocomplete.length > 2) {
                 for (var i = 0; i < this.carti.length; i++) {
-                    if (this.carti[i].loc_publicare.toLowerCase().includes(this.loc_publicare_autocomplete.toLowerCase())) {
-                        this.carti_lista_loc_publicare_autocomplete.push(this.carti[i]);
+                    if (this.carti[i].loc_publicare) {
+                        for (const loc_publicare of this.carti[i].loc_publicare.split(/[\s,]+/)) {
+                            if (loc_publicare.toLowerCase().includes(loc_publicare_autocomplete.toLowerCase()) &&
+                                !this.carti_lista_loc_publicare_autocomplete.includes(loc_publicare)) {
+                                this.carti_lista_loc_publicare_autocomplete.push(loc_publicare);
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        // Autocomplete pentru subiecte folosind carti trimise din start in vuejs
+        subiecteAutoComplete: function () {
+            this.carti_lista_subiecte_autocomplete = [];
+            var subiecte_autocomplete = this.subiecte_autocomplete.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            if (subiecte_autocomplete.length > 2) {
+                for (var i = 0; i < this.carti.length; i++) {
+                    if (this.carti[i].subiecte) {
+                        for (const subiecte of this.carti[i].subiecte.split(/[\s,]+/)) {
+                            if (subiecte.toLowerCase().includes(subiecte_autocomplete.toLowerCase()) &&
+                                !this.carti_lista_subiecte_autocomplete.includes(subiecte)) {
+                                this.carti_lista_subiecte_autocomplete.push(subiecte);
+                            }
+                        }
                     }
                 }
             }
@@ -106,10 +158,16 @@ const carte = createApp({
         // Autocomplete pentru limba folosind carti trimise din start in vuejs
         limbaAutoComplete: function () {
             this.carti_lista_limba_autocomplete = [];
-            if (this.limba_autocomplete.length > 2) {
+            var limba_autocomplete = this.limba_autocomplete.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            if (limba_autocomplete.length > 2) {
                 for (var i = 0; i < this.carti.length; i++) {
-                    if (this.carti[i].limba.toLowerCase().includes(this.limba_autocomplete.toLowerCase())) {
-                        this.carti_lista_limba_autocomplete.push(this.carti[i]);
+                    if (this.carti[i].limba) {
+                        for (const limba of this.carti[i].limba.split(/[\s,]+/)) {
+                            if (limba.toLowerCase().includes(limba_autocomplete.toLowerCase()) &&
+                                !this.carti_lista_limba_autocomplete.includes(limba)) {
+                                this.carti_lista_limba_autocomplete.push(limba);
+                            }
+                        }
                     }
                 }
             }
@@ -117,10 +175,16 @@ const carte = createApp({
         // Autocomplete pentru tip_material folosind carti trimise din start in vuejs
         tip_materialAutoComplete: function () {
             this.carti_lista_tip_material_autocomplete = [];
-            if (this.tip_material_autocomplete.length > 2) {
+            var tip_material_autocomplete = this.tip_material_autocomplete.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            if (tip_material_autocomplete.length > 2) {
                 for (var i = 0; i < this.carti.length; i++) {
-                    if (this.carti[i].tip_material.toLowerCase().includes(this.tip_material_autocomplete.toLowerCase())) {
-                        this.carti_lista_tip_material_autocomplete.push(this.carti[i]);
+                    if (this.carti[i].tip_material) {
+                        for (const tip_material of this.carti[i].tip_material.split(/[\s,]+/)) {
+                            if (tip_material.toLowerCase().includes(tip_material_autocomplete.toLowerCase()) &&
+                                !this.carti_lista_tip_material_autocomplete.includes(tip_material)) {
+                                this.carti_lista_tip_material_autocomplete.push(tip_material);
+                            }
+                        }
                     }
                 }
             }
@@ -128,10 +192,16 @@ const carte = createApp({
         // Autocomplete pentru locatie folosind carti trimise din start in vuejs
         locatieAutoComplete: function () {
             this.carti_lista_locatie_autocomplete = [];
-            if (this.locatie_autocomplete.length > 2) {
+            var locatie_autocomplete = this.locatie_autocomplete.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            if (locatie_autocomplete.length > 2) {
                 for (var i = 0; i < this.carti.length; i++) {
-                    if (this.carti[i].locatie.toLowerCase().includes(this.locatie_autocomplete.toLowerCase())) {
-                        this.carti_lista_locatie_autocomplete.push(this.carti[i]);
+                    if (this.carti[i].locatie) {
+                        for (const locatie of this.carti[i].locatie.split(/[\s,]+/)) {
+                            if (locatie.toLowerCase().includes(locatie_autocomplete.toLowerCase()) &&
+                                !this.carti_lista_locatie_autocomplete.includes(locatie)) {
+                                this.carti_lista_locatie_autocomplete.push(locatie);
+                            }
+                        }
                     }
                 }
             }

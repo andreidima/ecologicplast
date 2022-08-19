@@ -40,7 +40,7 @@ class CarteController extends Controller
      */
     public function create(Request $request)
     {
-        $carti = Carte::select('id', 'autor', 'editura', 'loc_publicare', 'limba', 'locatie', 'tip_material')->get();
+        $carti = Carte::select('id', 'autor', 'editura', 'loc_publicare', 'subiecte', 'limba', 'locatie', 'tip_material')->get();
 
         $request->session()->get('carte_return_url') ?? $request->session()->put('carte_return_url', url()->previous());
 
@@ -81,7 +81,7 @@ class CarteController extends Controller
      */
     public function edit(Request $request, Carte $carte)
     {
-        $carti = Carte::select('id', 'autor', 'editura', 'loc_publicare', 'limba', 'locatie', 'tip_material')->get();
+        $carti = Carte::select('id', 'autor', 'editura', 'loc_publicare', 'subiecte', 'limba', 'locatie', 'tip_material')->get();
 
         $request->session()->get('carte_return_url') ?? $request->session()->put('carte_return_url', url()->previous());
 
