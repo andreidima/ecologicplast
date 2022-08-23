@@ -31,6 +31,39 @@
                 <input
                     type="text"
                     v-model="autor_autocomplete"
+                    {{-- v-on:keyup="autocomplete('autor')" --}}
+                    v-on:input="nume_camp = 'autor'; valoare_camp = $event.target.value; autorAutoComplete()"
+                    class="form-control bg-white rounded-3 {{ $errors->has('autor') ? 'is-invalid' : '' }}"
+                    name="autor"
+                    placeholder=""
+                    ref="autor"
+                    autocomplete="off"
+                    required>
+                    <div v-cloak v-if="nume_camp == 'autor'" class="panel-footer">
+                        <div class="list-group">
+                            <button class="list-group-item list-group-item list-group-item-action py-0"
+                                v-for="autor in carti_lista_autor_autocomplete"
+                                v-on:click="
+                                    {{-- se sterge ce este introdus dupa ultima virgula. +1 pastreaza si virgula --}}
+                                    {{-- autor_autocomplete.lastIndexOf(',') == -1 -- Daca nu este primul element, se adauga un spatiu, dupa virgula --}}
+                                    {{-- autor_autocomplete += autor -- se adauga in string textul pe care se da click --}}
+                                    autor_autocomplete = autor_autocomplete.substr(0, autor_autocomplete.lastIndexOf(',') + 1);
+                                    autor_autocomplete += (autor_autocomplete.lastIndexOf(',') == -1 ? '' : ' ');
+                                    autor_autocomplete += autor;
+
+                                    carti_lista_autor_autocomplete = '';
+                                    this.$refs.editura.focus();
+                                ">
+                                    @{{ autor }}
+                            </button>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-lg-4 mb-5 mx-auto">
+                <label for="autor" class="mb-0 ps-3">Autor **</label>
+                <input
+                    type="text"
+                    v-model="autor_autocomplete"
                     v-on:keyup="autorAutoComplete()"
                     class="form-control bg-white rounded-3 {{ $errors->has('autor') ? 'is-invalid' : '' }}"
                     name="autor"

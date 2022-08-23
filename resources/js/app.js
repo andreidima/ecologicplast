@@ -52,7 +52,9 @@ const carte = createApp({
         return {
             carti: carti,
 
-            // carti_lista_autocomplete: [],
+            nume_camp: '',
+            valoare_camp: '',
+            carti_lista_autocomplete: [],
 
             autor_autocomplete: autor,
             // autor: autor,
@@ -74,11 +76,14 @@ const carte = createApp({
     created: function () {
     },
     methods: {
-        autoComplete($value) {
+        // autocomplete($value) {
+        autocomplete(event) {
             this.carti_lista_autocomplete = [];
+            // this.nume_camp = $value;
             // var $value = this.$value.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
-            var camp = $value;
-            console.log(camp, this.camp);
+            // var camp = $value;
+            var camp = '';
+            console.log(event);
             // if (autor_autocomplete.length > 2) {
             //     for (var i = 0; i < this.carti.length; i++) {
             //         if (this.carti[i].autor && this.carti[i].autor.toLowerCase().includes(autor_autocomplete.toLowerCase())) {
