@@ -77,19 +77,25 @@ const carte = createApp({
     },
     methods: {
         // autocomplete($value) {
-        autocomplete(event) {
+        autocomplete() {
             this.carti_lista_autocomplete = [];
             // this.nume_camp = $value;
             // var $value = this.$value.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
             // var camp = $value;
-            var camp = '';
-            console.log(event);
+            // var camp = '';
+            // console.log('a');
             // if (autor_autocomplete.length > 2) {
-            //     for (var i = 0; i < this.carti.length; i++) {
-            //         if (this.carti[i].autor && this.carti[i].autor.toLowerCase().includes(autor_autocomplete.toLowerCase())) {
-            //             this.carti_lista_autor_autocomplete.push(this.carti[i].autor);
-            //         }
-            //     }
+                for (var i = 0; i < this.carti.length; i++) {
+                    if (this.carti[i].autor) {
+                        if (this.autor_autocomplete) {
+                            if (this.carti[i].autor.toLowerCase().includes(this.autor_autocomplete.toLowerCase())) {
+                                this.carti_lista_autocomplete.push(this.carti[i].autor);
+                            }
+                        } else {
+                            this.carti_lista_autocomplete.push(this.carti[i].autor);
+                        }
+                    }
+                }
             // }
         },
         // Autocomplete pentru autor folosind carti trimise din start in vuejs
