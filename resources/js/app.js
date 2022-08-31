@@ -73,6 +73,11 @@ const carte = createApp({
             carti_lista_locatie_autocomplete: [],
         }
     },
+    watch: {
+        autor_autocomplete: function () {
+            this.autocomplete();
+        },
+    },
     created: function () {
     },
     methods: {

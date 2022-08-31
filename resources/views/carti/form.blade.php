@@ -32,8 +32,8 @@
                     type="text"
                     v-model="autor_autocomplete"
                     {{-- v-on:keyup="autocomplete('autor')" --}}
-                    v-on:focus="nume_camp = 'autor'; valoare_camp = $event.target.value; autocomplete()"
-                    v-on:input="nume_camp = 'autor'; valoare_camp = $event.target.value; autocomplete()"
+                    {{-- v-on:focus="nume_camp = 'autor'; valoare_camp = $event.target.value; autocomplete()"
+                    v-on:input="nume_camp = 'autor'; valoare_camp = $event.target.value; autocomplete()" --}}
                     {{-- v-on:blur="nume_camp = ''; valoare_camp = ''; autocomplete()" --}}
                     class="form-control bg-white rounded-3 {{ $errors->has('autor') ? 'is-invalid' : '' }}"
                     name="autor"
