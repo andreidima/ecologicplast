@@ -32,9 +32,10 @@
                     type="text"
                     v-model="autor_autocomplete"
                     {{-- v-on:keyup="autocomplete('autor')" --}}
-                    {{-- v-on:focus="nume_camp = 'autor'; valoare_camp = $event.target.value; autocomplete()"
-                    v-on:input="nume_camp = 'autor'; valoare_camp = $event.target.value; autocomplete()" --}}
-                    {{-- v-on:blur="nume_camp = ''; valoare_camp = ''; autocomplete()" --}}
+                    v-on:focus="nume_camp = 'autor'; valoare_camp = $event.target.value; autocomplete()"
+                    v-on:input="nume_camp = 'autor'; valoare_camp = $event.target.value; autocomplete()"
+                    {{-- v-on:focus="nume_camp = 'autor'; valoare_camp = $event.target.value;" --}}
+                    {{-- v-on:blur="nume_camp = ''; valoare_camp = '';" --}}
                     class="form-control bg-white rounded-3 {{ $errors->has('autor') ? 'is-invalid' : '' }}"
                     name="autor"
                     placeholder=""
@@ -49,11 +50,11 @@
                                     {{-- se sterge ce este introdus dupa ultima virgula. +1 pastreaza si virgula --}}
                                     {{-- autor_autocomplete.lastIndexOf(',') == -1 -- Daca nu este primul element, se adauga un spatiu, dupa virgula --}}
                                     {{-- autor_autocomplete += autor -- se adauga in string textul pe care se da click --}}
-                                    {{-- autor_autocomplete = autor_autocomplete.substr(0, autor_autocomplete.lastIndexOf(',') + 1);
+                                    autor_autocomplete = autor_autocomplete.substr(0, autor_autocomplete.lastIndexOf(',') + 1);
                                     autor_autocomplete += (autor_autocomplete.lastIndexOf(',') == -1 ? '' : ' ');
-                                    autor_autocomplete += autor; --}}
+                                    autor_autocomplete += autor;
 
-                                    {{-- carti_lista_autocomplete = ''; --}}
+                                    carti_lista_autocomplete = '';
                                     {{-- this.$refs.editura.focus(); --}}
                                 ">
                                     @{{ autor }}

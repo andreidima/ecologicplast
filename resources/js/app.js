@@ -75,7 +75,7 @@ const carte = createApp({
     },
     watch: {
         autor_autocomplete: function () {
-            this.autocomplete();
+            // this.autocomplete();
         },
     },
     created: function () {
@@ -84,20 +84,21 @@ const carte = createApp({
         // autocomplete($value) {
         autocomplete() {
             this.carti_lista_autocomplete = [];
-            // this.nume_camp = $value;
-            // var $value = this.$value.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            var nume_camp = this.nume_camp;
+            var valoare_camp = this.valoare_camp.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
             // var camp = $value;
             // var camp = '';
-            // console.log('a');
+            // console.log(nume_camp);
             // if (autor_autocomplete.length > 2) {
                 for (var i = 0; i < this.carti.length; i++) {
-                    if (this.carti[i].autor) {
-                        if (this.autor_autocomplete) {
-                            if (this.carti[i].autor.toLowerCase().includes(this.autor_autocomplete.toLowerCase())) {
-                                this.carti_lista_autocomplete.push(this.carti[i].autor);
+                    // console.log(this.carti[i][nume_camp]);
+                    if (this.carti[i][nume_camp]) {
+                        if (valoare_camp) {
+                            if (this.carti[i][nume_camp].toLowerCase().includes(valoare_camp.toLowerCase())) {
+                                this.carti_lista_autocomplete.push(this.carti[i][nume_camp]);
                             }
                         } else {
-                            this.carti_lista_autocomplete.push(this.carti[i].autor);
+                            this.carti_lista_autocomplete.push(this.carti[i][nume_camp]);
                         }
                     }
                 }
