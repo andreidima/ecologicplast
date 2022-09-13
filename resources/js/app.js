@@ -86,23 +86,17 @@ const carte = createApp({
             this.carti_lista_autocomplete = [];
             var nume_camp = this.nume_camp;
             var valoare_camp = this.valoare_camp.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
-            // var camp = $value;
-            // var camp = '';
-            // console.log(nume_camp);
-            // if (autor_autocomplete.length > 2) {
-                for (var i = 0; i < this.carti.length; i++) {
-                    // console.log(this.carti[i][nume_camp]);
-                    if (this.carti[i][nume_camp]) {
-                        if (valoare_camp) {
-                            if (this.carti[i][nume_camp].toLowerCase().includes(valoare_camp.toLowerCase())) {
-                                this.carti_lista_autocomplete.push(this.carti[i][nume_camp]);
+            for (var i = 0; i < this.carti.length; i++) { // se parcurg toate cartile
+                if (this.carti[i][nume_camp]) { // daca respectiva carte are valoare in respectivul camp
+                    for (const element of this.carti[i][nume_camp].split(/[\s,]+/)) { // se imparte campul, dupa virgula, in elemente
+                        if (valoare_camp && element.toLowerCase().includes(valoare_camp.toLowerCase())) { // daca elementul are stringul de cautare
+                            if (!this.carti_lista_autocomplete.includes(element)) { // daca elementul nu este deja inclus
+                                this.carti_lista_autocomplete.push(element); // se adauga elementul in array
                             }
-                        } else {
-                            this.carti_lista_autocomplete.push(this.carti[i][nume_camp]);
                         }
                     }
                 }
-            // }
+            }
         },
         // Autocomplete pentru autor folosind carti trimise din start in vuejs
         autorAutoComplete: function () {

@@ -42,9 +42,10 @@
                     ref="autor"
                     autocomplete="off"
                     required>
-                    <div v-cloak v-if="nume_camp == 'autor'" class="panel-footer">
+                    <div v-cloak v-if="nume_camp == 'autor'" class="panel-footer overflow-auto" style="height: 100px;">
                         <div class="list-group">
                             <button class="list-group-item list-group-item list-group-item-action py-0"
+                                type="reset"
                                 v-for="autor in carti_lista_autocomplete"
                                 v-on:click="
                                     {{-- se sterge ce este introdus dupa ultima virgula. +1 pastreaza si virgula --}}
