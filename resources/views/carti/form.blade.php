@@ -2,13 +2,13 @@
 
 <script type="application/javascript">
     carti = {!! json_encode($carti) !!}
-    autor = {!! json_encode(old('autor', $carte->autor)) !!}
-    editura = {!! json_encode(old('editura', $carte->editura)) !!}
-    loc_publicare = {!! json_encode(old('loc_publicare', $carte->loc_publicare)) !!}
-    subiecte = {!! json_encode(old('subiecte', $carte->subiecte)) !!}
-    limba = {!! json_encode(old('limba', $carte->limba)) !!}
-    tip_material = {!! json_encode(old('tip_material', $carte->tip_material)) !!}
-    locatie = {!! json_encode(old('locatie', $carte->locatie)) !!}
+    autor = {!! json_encode(old('autor', $carte->autor) ?? '') !!}
+    editura = {!! json_encode(old('editura', $carte->editura) ?? '') !!}
+    loc_publicare = {!! json_encode(old('loc_publicare', $carte->loc_publicare) ?? '') !!}
+    subiecte = {!! json_encode(old('subiecte', $carte->subiecte) ?? '') !!}
+    limba = {!! json_encode(old('limba', $carte->limba) ?? '') !!}
+    tip_material = {!! json_encode(old('tip_material', $carte->tip_material) ?? '') !!}
+    locatie = {!! json_encode(old('locatie', $carte->locatie) ?? '') !!}
 </script>
 
 
@@ -20,6 +20,7 @@
                 <label for="titlu" class="mb-0 ps-3">Titlu<span class="text-danger">*</span></label>
                 <input
                     type="text"
+                    v-on:focus="nume_camp = '';"
                     class="form-control bg-white rounded-3 {{ $errors->has('titlu') ? 'is-invalid' : '' }}"
                     name="titlu"
                     placeholder=""
@@ -42,7 +43,7 @@
                     ref="autor"
                     autocomplete="off"
                     required>
-                    <div v-cloak v-if="nume_camp == 'autor'" class="panel-footer overflow-auto" style="height: 100px;">
+                    <div v-cloak v-if="(nume_camp == 'autor') && (carti_lista_autocomplete.length > 0)" class="panel-footer overflow-auto" style="max-height: 100px;">
                         <div class="list-group">
                             <button class="list-group-item list-group-item list-group-item-action py-0"
                                 type="reset"
@@ -56,14 +57,14 @@
                                     autor_autocomplete += autor;
 
                                     carti_lista_autocomplete = '';
-                                    {{-- this.$refs.editura.focus(); --}}
+                                    this.$refs.editura.focus();
                                 ">
                                     @{{ autor }}
                             </button>
                         </div>
                     </div>
             </div>
-            <div class="col-lg-4 mb-5 mx-auto">
+            {{-- <div class="col-lg-4 mb-5 mx-auto">
                 <label for="autor" class="mb-0 ps-3">Autor **</label>
                 <input
                     type="text"
@@ -79,11 +80,11 @@
                         <div class="list-group">
                             <button class="list-group-item list-group-item list-group-item-action py-0"
                                 v-for="autor in carti_lista_autor_autocomplete"
-                                v-on:click="
+                                v-on:click=" --}}
                                     {{-- se sterge ce este introdus dupa ultima virgula. +1 pastreaza si virgula --}}
                                     {{-- autor_autocomplete.lastIndexOf(',') == -1 -- Daca nu este primul element, se adauga un spatiu, dupa virgula --}}
                                     {{-- autor_autocomplete += autor -- se adauga in string textul pe care se da click --}}
-                                    autor_autocomplete = autor_autocomplete.substr(0, autor_autocomplete.lastIndexOf(',') + 1);
+                                    {{-- autor_autocomplete = autor_autocomplete.substr(0, autor_autocomplete.lastIndexOf(',') + 1);
                                     autor_autocomplete += (autor_autocomplete.lastIndexOf(',') == -1 ? '' : ' ');
                                     autor_autocomplete += autor;
 
@@ -94,29 +95,31 @@
                             </button>
                         </div>
                     </div>
-            </div>
+            </div> --}}
             <div class="col-lg-4 mb-5 mx-auto">
                 <label for="editura" class="mb-0 ps-3">Editura **</label>
                 <input
                     type="text"
                     v-model="editura_autocomplete"
-                    v-on:keyup="edituraAutoComplete()"
+                    v-on:focus="nume_camp = 'editura'; valoare_camp = $event.target.value; autocomplete()"
+                    v-on:input="nume_camp = 'editura'; valoare_camp = $event.target.value; autocomplete()"
                     class="form-control bg-white rounded-3 {{ $errors->has('editura') ? 'is-invalid' : '' }}"
                     name="editura"
                     placeholder=""
                     ref="editura"
                     autocomplete="off"
                     required>
-                    <div v-cloak v-if="carti_lista_editura_autocomplete.length" class="panel-footer">
+                    <div v-cloak v-if="(nume_camp == 'editura') && (carti_lista_autocomplete.length > 0)" class="panel-footer overflow-auto" style="max-height: 100px;">
                         <div class="list-group">
                             <button class="list-group-item list-group-item list-group-item-action py-0"
-                                v-for="editura in carti_lista_editura_autocomplete"
+                                type="reset"
+                                v-for="editura in carti_lista_autocomplete"
                                 v-on:click="
                                     editura_autocomplete = editura_autocomplete.substr(0, editura_autocomplete.lastIndexOf(',') + 1);
                                     editura_autocomplete += (editura_autocomplete.lastIndexOf(',') == -1 ? '' : ' ');
                                     editura_autocomplete += editura;
 
-                                    carti_lista_editura_autocomplete = '';
+                                    carti_lista_autocomplete = '';
                                     this.$refs.loc_publicare.focus();
                                 ">
                                     @{{ editura }}
@@ -129,23 +132,25 @@
                 <input
                     type="text"
                     v-model="loc_publicare_autocomplete"
-                    v-on:keyup="loc_publicareAutoComplete()"
+                    v-on:focus="nume_camp = 'loc_publicare'; valoare_camp = $event.target.value; autocomplete()"
+                    v-on:input="nume_camp = 'loc_publicare'; valoare_camp = $event.target.value; autocomplete()"
                     class="form-control bg-white rounded-3 {{ $errors->has('loc_publicare') ? 'is-invalid' : '' }}"
                     name="loc_publicare"
                     placeholder=""
                     ref="loc_publicare"
                     autocomplete="off"
                     required>
-                    <div v-cloak v-if="carti_lista_loc_publicare_autocomplete.length" class="panel-footer">
+                    <div v-cloak v-if="(nume_camp == 'loc_publicare') && (carti_lista_autocomplete.length > 0)" class="panel-footer overflow-auto" style="max-height: 100px;">
                         <div class="list-group">
                             <button class="list-group-item list-group-item list-group-item-action py-0"
-                                v-for="loc_publicare in carti_lista_loc_publicare_autocomplete"
+                                type="reset"
+                                v-for="loc_publicare in carti_lista_autocomplete"
                                 v-on:click="
                                     loc_publicare_autocomplete = loc_publicare_autocomplete.substr(0, loc_publicare_autocomplete.lastIndexOf(',') + 1);
                                     loc_publicare_autocomplete += (loc_publicare_autocomplete.lastIndexOf(',') == -1 ? '' : ' ');
                                     loc_publicare_autocomplete += loc_publicare;
 
-                                    carti_lista_loc_publicare_autocomplete = '';
+                                    carti_lista_autocomplete = '';
                                     this.$refs.an_publicare.focus();
                                 ">
                                     @{{ loc_publicare }}
@@ -157,6 +162,7 @@
                 <label for="an_publicare" class="mb-0 ps-3">An publicare</label>
                 <input
                     type="text"
+                    v-on:focus="nume_camp = '';"
                     class="form-control bg-white rounded-3 {{ $errors->has('an_publicare') ? 'is-invalid' : '' }}"
                     name="an_publicare"
                     placeholder=""
@@ -168,6 +174,7 @@
                 <label for="isbn_issn" class="mb-0 ps-3">ISBN/ ISSN</label>
                 <input
                     type="text"
+                    v-on:focus="nume_camp = '';"
                     class="form-control bg-white rounded-3 {{ $errors->has('isbn_issn') ? 'is-invalid' : '' }}"
                     name="isbn_issn"
                     placeholder=""
@@ -179,23 +186,25 @@
                 <input
                     type="text"
                     v-model="subiecte_autocomplete"
-                    v-on:keyup="subiecteAutoComplete()"
+                    v-on:focus="nume_camp = 'subiecte'; valoare_camp = $event.target.value; autocomplete()"
+                    v-on:input="nume_camp = 'subiecte'; valoare_camp = $event.target.value; autocomplete()"
                     class="form-control bg-white rounded-3 {{ $errors->has('subiecte') ? 'is-invalid' : '' }}"
                     name="subiecte"
                     placeholder=""
                     ref="subiecte"
                     autocomplete="off"
                     required>
-                    <div v-cloak v-if="carti_lista_subiecte_autocomplete.length" class="panel-footer">
+                    <div v-cloak v-if="(nume_camp == 'subiecte') && (carti_lista_autocomplete.length > 0)" class="panel-footer overflow-auto" style="max-height: 100px;">
                         <div class="list-group">
                             <button class="list-group-item list-group-item list-group-item-action py-0"
-                                v-for="subiecte in carti_lista_subiecte_autocomplete"
+                                type="reset"
+                                v-for="subiecte in carti_lista_autocomplete"
                                 v-on:click="
                                     subiecte_autocomplete = subiecte_autocomplete.substr(0, subiecte_autocomplete.lastIndexOf(',') + 1);
                                     subiecte_autocomplete += (subiecte_autocomplete.lastIndexOf(',') == -1 ? '' : ' ');
                                     subiecte_autocomplete += subiecte;
 
-                                    carti_lista_subiecte_autocomplete = '';
+                                    carti_lista_autocomplete = '';
                                     this.$refs.inventar.focus();
                                 ">
                                     @{{ subiecte }}
@@ -207,6 +216,7 @@
                 <label for="inventar" class="mb-0 ps-3">Inventar</label>
                 <input
                     type="text"
+                    v-on:focus="nume_camp = '';"
                     class="form-control bg-white rounded-3 {{ $errors->has('inventar') ? 'is-invalid' : '' }}"
                     name="inventar"
                     placeholder=""
@@ -219,23 +229,25 @@
                 <input
                     type="text"
                     v-model="limba_autocomplete"
-                    v-on:keyup="limbaAutoComplete()"
+                    v-on:focus="nume_camp = 'limba'; valoare_camp = $event.target.value; autocomplete()"
+                    v-on:input="nume_camp = 'limba'; valoare_camp = $event.target.value; autocomplete()"
                     class="form-control bg-white rounded-3 {{ $errors->has('limba') ? 'is-invalid' : '' }}"
                     name="limba"
                     placeholder=""
                     ref="limba"
                     autocomplete="off"
                     required>
-                    <div v-cloak v-if="carti_lista_limba_autocomplete.length" class="panel-footer">
+                    <div v-cloak v-if="(nume_camp == 'limba') && (carti_lista_autocomplete.length > 0)" class="panel-footer overflow-auto" style="max-height: 100px;">
                         <div class="list-group">
                             <button class="list-group-item list-group-item list-group-item-action py-0"
-                                v-for="limba in carti_lista_limba_autocomplete"
+                                type="reset"
+                                v-for="limba in carti_lista_autocomplete"
                                 v-on:click="
                                     limba_autocomplete = limba_autocomplete.substr(0, limba_autocomplete.lastIndexOf(',') + 1);
                                     limba_autocomplete += (limba_autocomplete.lastIndexOf(',') == -1 ? '' : ' ');
                                     limba_autocomplete += limba;
 
-                                    carti_lista_limba_autocomplete = '';
+                                    carti_lista_autocomplete = '';
                                     this.$refs.tip_material.focus();
                                 ">
                                     @{{ limba }}
@@ -248,23 +260,25 @@
                 <input
                     type="text"
                     v-model="tip_material_autocomplete"
-                    v-on:keyup="tip_materialAutoComplete()"
+                    v-on:focus="nume_camp = 'tip_material'; valoare_camp = $event.target.value; autocomplete()"
+                    v-on:input="nume_camp = 'tip_material'; valoare_camp = $event.target.value; autocomplete()"
                     class="form-control bg-white rounded-3 {{ $errors->has('tip_material') ? 'is-invalid' : '' }}"
                     name="tip_material"
                     placeholder=""
                     ref="tip_material"
                     autocomplete="off"
                     required>
-                    <div v-cloak v-if="carti_lista_tip_material_autocomplete.length" class="panel-footer">
+                    <div v-cloak v-if="(nume_camp == 'tip_material') && (carti_lista_autocomplete.length > 0)" class="panel-footer overflow-auto" style="max-height: 100px;">
                         <div class="list-group">
                             <button class="list-group-item list-group-item list-group-item-action py-0"
-                                v-for="tip_material in carti_lista_tip_material_autocomplete"
+                                type="reset"
+                                v-for="tip_material in carti_lista_autocomplete"
                                 v-on:click="
                                     tip_material_autocomplete = tip_material_autocomplete.substr(0, tip_material_autocomplete.lastIndexOf(',') + 1);
                                     tip_material_autocomplete += (tip_material_autocomplete.lastIndexOf(',') == -1 ? '' : ' ');
                                     tip_material_autocomplete += tip_material;
 
-                                    carti_lista_tip_material_autocomplete = '';
+                                    carti_lista_autocomplete = '';
                                     this.$refs.locatie.focus();
                                 ">
                                     @{{ tip_material }}
@@ -277,23 +291,25 @@
                 <input
                     type="text"
                     v-model="locatie_autocomplete"
-                    v-on:keyup="locatieAutoComplete()"
+                    v-on:focus="nume_camp = 'locatie'; valoare_camp = $event.target.value; autocomplete()"
+                    v-on:input="nume_camp = 'locatie'; valoare_camp = $event.target.value; autocomplete()"
                     class="form-control bg-white rounded-3 {{ $errors->has('locatie') ? 'is-invalid' : '' }}"
                     name="locatie"
                     placeholder=""
                     ref="locatie"
                     autocomplete="off"
                     required>
-                    <div v-cloak v-if="carti_lista_locatie_autocomplete.length" class="panel-footer">
+                    <div v-cloak v-if="(nume_camp == 'locatie') && (carti_lista_autocomplete.length > 0)" class="panel-footer overflow-auto" style="max-height: 100px;">
                         <div class="list-group">
                             <button class="list-group-item list-group-item list-group-item-action py-0"
-                                v-for="locatie in carti_lista_locatie_autocomplete"
+                                type="reset"
+                                v-for="locatie in carti_lista_autocomplete"
                                 v-on:click="
                                     locatie_autocomplete = locatie_autocomplete.substr(0, locatie_autocomplete.lastIndexOf(',') + 1);
                                     locatie_autocomplete += (locatie_autocomplete.lastIndexOf(',') == -1 ? '' : ' ');
                                     locatie_autocomplete += locatie;
 
-                                    carti_lista_locatie_autocomplete = '';
+                                    carti_lista_autocomplete = '';
                                     this.$refs.submit.focus();
                                 ">
                                     @{{ locatie }}
