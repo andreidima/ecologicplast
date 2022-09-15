@@ -91,6 +91,7 @@ const carte = createApp({
                             if ((!valoare_camp) || (valoare_camp && element.toLowerCase().includes(valoare_camp.toLowerCase()))) { // daca elementul are stringul de cautare
                             // if (element.toLowerCase().includes(valoare_camp.toLowerCase())) { // daca elementul are stringul de cautare
                                 if (!this.carti_lista_autocomplete.includes(element)) { // daca elementul nu este deja inclus
+                                    console.log(element);
                                     this.carti_lista_autocomplete.push(element); // se adauga elementul in array
                                 }
                             }
