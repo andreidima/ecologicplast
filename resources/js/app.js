@@ -89,9 +89,7 @@ const carte = createApp({
                     if (this.carti[i][nume_camp]) { // daca respectiva carte are valoare in respectivul camp
                         for (const element of this.carti[i][nume_camp].split(/[\s,]+/)) { // se imparte campul, dupa virgula, in elemente
                             if ((!valoare_camp) || (valoare_camp && element.toLowerCase().includes(valoare_camp.toLowerCase()))) { // daca elementul are stringul de cautare
-                            // if (element.toLowerCase().includes(valoare_camp.toLowerCase())) { // daca elementul are stringul de cautare
                                 if (!this.carti_lista_autocomplete.includes(element)) { // daca elementul nu este deja inclus
-                                    console.log(element);
                                     this.carti_lista_autocomplete.push(element); // se adauga elementul in array
                                 }
                             }
