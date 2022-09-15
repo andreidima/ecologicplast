@@ -97,6 +97,7 @@ const carte = createApp({
                     }
                 }
             // }
+            this.carti_lista_autocomplete.sort();
         },
         // // Autocomplete pentru autor folosind carti trimise din start in vuejs
         // autorAutoComplete: function () {
