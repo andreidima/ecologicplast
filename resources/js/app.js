@@ -83,11 +83,13 @@ const carte = createApp({
         autocomplete() {
             this.carti_lista_autocomplete = [];
             var nume_camp = this.nume_camp;
-            var valoare_camp = this.valoare_camp.split(/[\s,]+/).pop(); // se imparte stringul dupa virgule, si se ia ultimul element
+            var valoare_camp = this.valoare_camp.split(",").pop().trim(); // se imparte stringul dupa virgule, si se ia ultimul element, si se sterg spatiile goale de la inceput si de la sfarsit
             // if (valoare_camp.length > 0) { // campul de cautare trebuie sa aiba minim 1 caracter
                 for (var i = 0; i < this.carti.length; i++) { // se parcurg toate cartile
                     if (this.carti[i][nume_camp]) { // daca respectiva carte are valoare in respectivul camp
-                        for (const element of this.carti[i][nume_camp].split(/[\s,]+/)) { // se imparte campul, dupa virgula, in elemente
+                        // for (const element of this.carti[i][nume_camp].split(/[\s,]+/)) { // se imparte campul, dupa virgula, in elemente
+                        for (var element of this.carti[i][nume_camp].split(",")) { // se imparte campul, dupa virgula, in elemente
+                            element = element.trim() // se sterg spatiile goale de la inceput si de la sfarsit
                             if ((!valoare_camp) || (valoare_camp && element.toLowerCase().includes(valoare_camp.toLowerCase()))) { // daca elementul are stringul de cautare
                                 if (!this.carti_lista_autocomplete.includes(element)) { // daca elementul nu este deja inclus
                                     this.carti_lista_autocomplete.push(element); // se adauga elementul in array
