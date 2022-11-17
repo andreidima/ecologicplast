@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\CarteController;
+use App\Http\Controllers\ClientController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +21,6 @@ Route::redirect('/', '/acasa');
 Route::group(['middleware' => 'auth'], function () {
     Route::view('/acasa', 'acasa');
 
-    Route::resource('/carti', CarteController::class,  ['parameters' => ['carti' => 'carte']]);
+    Route::resource('/clienti', ClientController::class,  ['parameters' => ['clienti' => 'client']]);
 });
 

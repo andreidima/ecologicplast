@@ -7,7 +7,7 @@
             <div class="shadow-lg" style="border-radius: 40px 40px 40px 40px;">
                 <div class="culoare2 border border-secondary p-2" style="border-radius: 40px 40px 0px 0px;">
                     <span class="badge text-light fs-5">
-                        <i class="fa-solid fa-book me-1"></i>Cărți / {{ $carte->titlu }}
+                        <i class="fa-solid fa-user me-1"></i>Clienți / {{ $client->nume }}
                     </span>
                 </div>
 
@@ -22,90 +22,90 @@
                         >
                             <tr>
                                 <td class="pe-4">
-                                    Titlu
+                                    Nume
                                 </td>
                                 <td>
-                                    {{ $carte->titlu }}
+                                    {{ $client->nume }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Autor
+                                    Telefon
                                 </td>
                                 <td>
-                                    {{ $carte->autor }}
+                                    {{ $client->telefon }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Editura
+                                    Adresa
                                 </td>
                                 <td>
-                                    {{ $carte->editura }}
+                                    {{ $client->adresa }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Loc publicare
+                                    Status
                                 </td>
                                 <td>
-                                    {{ $carte->loc_publicare }}
+                                    {{ $client->status }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Am publicare
+                                    Intrare
                                 </td>
                                 <td>
-                                    {{ $carte->an_publicare }}
+                                    {{ $client->intrare ? \Carbon\Carbon::parse($client->intrare)->isoFormat('DD.MM.YYYY') : '' }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    ISBN/ ISSN
+                                    Lansare
                                 </td>
                                 <td>
-                                    {{ $carte->isbn_issn }}
+                                    {{ $client->lansare ? \Carbon\Carbon::parse($client->lansare)->isoFormat('DD.MM.YYYY') : '' }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Subiecte
+                                    Ofertă preț
                                 </td>
                                 <td>
-                                    {{ $carte->subiecte }}
+                                    {{ $client->oferta_pret }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Inventar
+                                    Avans
                                 </td>
                                 <td>
-                                    {{ $carte->inventar }}
+                                    {{ $client->avans }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Limba
+                                    Observații
                                 </td>
                                 <td>
-                                    {{ $carte->limba }}
+                                    {{ $client->observatii }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Tip material
+                                    Creat la data:
                                 </td>
                                 <td>
-                                    {{ $carte->tip_material }}
+                                    {{ $client->created_at ? \Carbon\Carbon::parse($client->created_at)->isoFormat('DD.MM.YYYY HH:mm') : '' }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pe-4">
-                                    Locație
+                                    Modificat la data:
                                 </td>
                                 <td>
-                                    {{ $carte->locatie }}
+                                    {{ $client->updated_at ? \Carbon\Carbon::parse($client->updated_at)->isoFormat('DD.MM.YYYY HH:mm') : '' }}
                                 </td>
                             </tr>
                         </table>
@@ -113,7 +113,7 @@
 
                     <div class="form-row mb-2 px-2">
                         <div class="col-lg-12 d-flex justify-content-center">
-                            <a class="btn btn-secondary text-white rounded-3" href="{{ Session::get('carte_return_url') }}">Înapoi</a>
+                            <a class="btn btn-secondary text-white rounded-3" href="{{ Session::get('client_return_url') }}">Înapoi</a>
                         </div>
                     </div>
 

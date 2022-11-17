@@ -45,56 +45,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item me-3">
-                            <a class="nav-link active" aria-current="page" href="/carti">
-                                <i class="fa-solid fa-book me-1"></i>Cărți
+                            <a class="nav-link active" aria-current="page" href="/clienti">
+                                <i class="fa-solid fa-users me-1"></i>Clienți
                             </a>
                         </li>
-                        {{-- <li class="nav-item me-3 dropdown">
-                            <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-calendar-check me-1"></i>
-                                Programări
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <form class="needs-validation" novalidate method="GET" action="/programari">
-                                        <input type="hidden" name="search_data" value="{{ \Carbon\Carbon::now()->todatestring() }}">
-                                        <button class="dropdown-item btn btn-link" href="programari" type="submit">
-                                            Azi
-                                        </button>
-                                    </form>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" href="/programari">
-                                        Toate
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item me-3">
-                            <a class="nav-link active" aria-current="page" href="/programari/afisare-calendar">
-                                <i class="fa-solid fa-calendar-days me-1"></i>Calendar
-                            </a>
-                        </li>
-                        <li class="nav-item me-3 dropdown">
-                            <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-bars me-1"></i>
-                                Utile
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('mesaje-trimise-sms.index') }}">
-                                        SMS trimise
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('zile-nelucratoare.index') }}">
-                                        Zile nelucrătoare
-                                    </a>
-                                </li>
-                            </div>
-                        </li> --}}
                     </ul>
                     </ul>
 
@@ -140,12 +94,6 @@
         </nav>
     </header>
     @else
-    {{-- <header class="py-1 culoare1 d-flex justify-content-left" style="">
-        <div class="container" style="display: inline-block">
-                <img src="{{ asset('imagini/autogns-logo-01-2048x482.png') }}" class="bg-white"
-                    style="width: auto; height: auto; max-width: 100%; max-height: 100px;">
-        </div>
-    </header> --}}
     @endauth
 
     <main class="flex-shrink-0 py-4">
@@ -155,7 +103,7 @@
     <footer class="mt-auto py-4 text-center text-white culoare1">
         <div class="">
             <p class="">
-                © Oana Dima
+                © Ecologic Plast
             </p>
             <span class="text-white">
                 <a href="https://validsoftware.ro/dezvoltare-aplicatii-web-personalizate/" class="text-white" target="_blank">

@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Carte extends Model
+class Client extends Model
 {
     use HasFactory;
 
-    protected $table = 'carti';
+    protected $table = 'clienti';
     protected $guarded = [];
 
     public function path()
     {
-        return "/carti/{$this->id}";
+        return "/clienti/{$this->id}";
     }
 
     public function user()

@@ -1,11 +1,11 @@
 @extends ('layouts.app')
 
 @section('content')
-<div class="container card" style="border-radius: 40px 40px 40px 40px;">
+<div class="mx-3 px-3 card" style="border-radius: 40px 40px 40px 40px;">
         <div class="row card-header align-items-center" style="border-radius: 40px 40px 0px 0px;">
             <div class="col-lg-3">
                 <span class="badge culoare1 fs-5">
-                    <i class="fa-solid fa-book me-1"></i>Cărți
+                    <i class="fa-solid fa-users me-1"></i>Clienți
                 </span>
             </div>
 
@@ -13,11 +13,14 @@
                 <form class="needs-validation" novalidate method="GET" action="{{ route(Route::currentRouteName())  }}">
                     @csrf
                     <div class="row mb-1 custom-search-form justify-content-center">
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control rounded-3" id="search_titlu" name="search_titlu" placeholder="Titlu" value="{{ $search_titlu }}">
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control rounded-3" id="search_nume" name="search_nume" placeholder="Nume" value="{{ $search_nume }}">
                         </div>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control rounded-3" id="search_autor" name="search_autor" placeholder="Autor" value="{{ $search_autor }}">
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control rounded-3" id="search_telefon" name="search_telefon" placeholder="Telefon" value="{{ $search_telefon }}">
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control rounded-3" id="search_status" name="search_status" placeholder="Status" value="{{ $search_status }}">
                         </div>
                     </div>
                     <div class="row custom-search-form justify-content-center">
@@ -32,7 +35,7 @@
             </div>
             <div class="col-lg-3 text-end">
                 <a class="btn btn-sm btn-success text-white border border-dark rounded-3 col-md-8" href="{{ route(Route::currentRouteName())  }}/adauga" role="button">
-                    <i class="fas fa-plus-square text-white me-1"></i>Adaugă carte
+                    <i class="fas fa-plus-square text-white me-1"></i>Adaugă client
                 </a>
             </div>
         </div>
@@ -47,37 +50,65 @@
                     {{-- <thead class="text-white rounded" style="background-color: #69A1B1"> --}}
                         <tr class="" style="padding:2rem">
                             <th class="">#</th>
-                            <th class="text-center px-3">Titlu</th>
-                            <th class="text-center px-3">Autor</th>
+                            <th class="">Creat de</th>
+                            <th class="">Nume client</th>
+                            <th class="">Telefon</th>
+                            <th class="">Status</th>
+                            <th class="">Adresa</th>
+                            <th class="text-center">Intrare</th>
+                            <th class="text-center">Lansare</th>
+                            <th class="text-center">Oferță<br>preț</th>
+                            <th class="text-center">Avans</th>
                             <th class="text-end">Acțiuni</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($carti as $carte)
+                        @forelse ($clienti as $client)
                             <tr>
                                 <td align="">
-                                    {{ ($carti ->currentpage()-1) * $carti ->perpage() + $loop->index + 1 }}
+                                    {{ ($clienti ->currentpage()-1) * $clienti ->perpage() + $loop->index + 1 }}
                                 </td>
                                 <td class="">
-                                    {{ $carte->titlu }}
+                                    {{ $client->user->name }}
                                 </td>
                                 <td class="">
-                                    {{ $carte->autor }}
+                                    {{ $client->nume }}
+                                </td>
+                                <td class="">
+                                    {{ $client->telefon }}
+                                </td>
+                                <td class="">
+                                    {{ $client->status }}
+                                </td>
+                                <td class="">
+                                    {{ $client->adresa }}
+                                </td>
+                                <td class="text-center">
+                                    {{ $client->intrare ? \Carbon\Carbon::parse($client->intrare)->isoFormat('DD.MM.YYYY') : '' }}
+                                </td>
+                                <td class="text-center">
+                                    {{ $client->lansare ? \Carbon\Carbon::parse($client->lansare)->isoFormat('DD.MM.YYYY') : '' }}
+                                </td>
+                                <td class="text-end">
+                                    {{ $client->oferta_pret }}
+                                </td>
+                                <td class="text-end">
+                                    {{ $client->avans }}
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-end">
-                                        <a href="{{ $carte->path() }}" class="flex me-1">
+                                        <a href="{{ $client->path() }}" class="flex me-1">
                                             <span class="badge bg-success">Vizualizează</span>
                                         </a>
-                                        <a href="{{ $carte->path() }}/modifica" class="flex me-1">
+                                        <a href="{{ $client->path() }}/modifica" class="flex me-1">
                                             <span class="badge bg-primary">Modifică</span>
                                         </a>
                                         <div style="flex" class="">
                                             <a
                                                 href="#"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#stergeCartea{{ $carte->id }}"
-                                                title="Șterge Cartea"
+                                                data-bs-target="#stergeClientul{{ $client->id }}"
+                                                title="Șterge Clientul"
                                                 >
                                                 <span class="badge bg-danger">Șterge</span>
                                             </a>
@@ -94,35 +125,35 @@
 
                 <nav>
                     <ul class="pagination justify-content-center">
-                        {{$carti->appends(Request::except('page'))->links()}}
+                        {{$clienti->appends(Request::except('page'))->links()}}
                     </ul>
                 </nav>
         </div>
     </div>
 
-    {{-- Modalele pentru stergere carte --}}
-    @foreach ($carti as $carte)
-        <div class="modal fade text-dark" id="stergeCartea{{ $carte->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- Modalele pentru stergere client --}}
+    @foreach ($clienti as $client)
+        <div class="modal fade text-dark" id="stergeClientul{{ $client->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-white" id="exampleModalLabel">Cartea: <b>{{ $carte->titlu }}</b></h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Clientul: <b>{{ $client->titlu }}</b></h5>
                     <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align:left;">
-                    Ești sigur ca vrei să ștergi Cartea?
+                    Ești sigur ca vrei să ștergi Clientul?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Renunță</button>
 
-                    <form method="POST" action="{{ $carte->path() }}">
+                    <form method="POST" action="{{ $client->path() }}">
                         @method('DELETE')
                         @csrf
                         <button
                             type="submit"
                             class="btn btn-danger text-white"
                             >
-                            Șterge Cartea
+                            Șterge Clientul
                         </button>
                     </form>
 
