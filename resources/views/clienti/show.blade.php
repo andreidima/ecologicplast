@@ -22,6 +22,14 @@
                         >
                             <tr>
                                 <td class="pe-4">
+                                    Creat de
+                                </td>
+                                <td>
+                                    {{ $client->user->name }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="pe-4">
                                     Nume
                                 </td>
                                 <td>
