@@ -20,6 +20,7 @@ class ClientController extends Controller
         $search_nume = $request->search_nume;
         $search_telefon = $request->search_telefon;
         $search_status = $request->search_status;
+        $sortare_lansare = $request->sortare_lansare;
 
         $clienti = Client::with('user')
             ->when($search_nume, function ($query, $search_nume) {
@@ -31,10 +32,18 @@ class ClientController extends Controller
             ->when($search_status, function ($query, $search_status) {
                 return $query->where('status', 'like', '%' . $search_status . '%');
             })
-            ->latest()
+            ->when($sortare_lansare, function ($query, $sortare_lansare) {
+                if ($sortare_lansare === "cea_mai_noua"){
+                    return $query->orderby('lansare', 'desc');
+                } else {
+                    return $query->orderby('lansare', 'asc');
+                }
+            }, function ($query) {
+                $query->latest();
+            })
             ->simplePaginate(25);
 
-        return view('clienti.index', compact('clienti', 'search_nume', 'search_telefon', 'search_status'));
+        return view('clienti.index', compact('clienti', 'search_nume', 'search_telefon', 'search_status', 'sortare_lansare'));
     }
 
     /**
@@ -122,8 +131,10 @@ class ClientController extends Controller
      */
     protected function validateRequest(Request $request)
     {
-        // if ($request->isMethod('post')) {
-        $request->request->add(['user_id' => $request->user()->id]);
+        // Se adauga userul doar la adaugare, iar la modificare nu se schimba
+        if ($request->isMethod('post')) {
+            $request->request->add(['user_id' => $request->user()->id]);
+        }
 
         // if ($request->isMethod('post')) {
         //     $request->request->add(['cheie_unica' => uniqid()]);

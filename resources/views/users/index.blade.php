@@ -1,11 +1,11 @@
 @extends ('layouts.app')
 
 @section('content')
-<div class="mx-3 px-3 card" style="border-radius: 40px 40px 40px 40px;">
+<div class="container card" style="border-radius: 40px 40px 40px 40px;">
         <div class="row card-header align-items-center" style="border-radius: 40px 40px 0px 0px;">
             <div class="col-lg-3">
                 <span class="badge culoare1 fs-5">
-                    <i class="fa-solid fa-users me-1"></i>Clienți
+                    <i class="fa-solid fa-user-gear me-1"></i>Utilizatori
                 </span>
             </div>
 
@@ -17,10 +17,7 @@
                             <input type="text" class="form-control rounded-3" id="search_nume" name="search_nume" placeholder="Nume" value="{{ $search_nume }}">
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control rounded-3" id="search_telefon" name="search_telefon" placeholder="Telefon" value="{{ $search_telefon }}">
-                        </div>
-                        <div class="col-lg-4">
-                            <input type="text" class="form-control rounded-3" id="search_status" name="search_status" placeholder="Status" value="{{ $search_status }}">
+                            <input type="text" class="form-control rounded-3" id="search_email" name="search_email" placeholder="Email" value="{{ $search_email }}">
                         </div>
                     </div>
                     <div class="row custom-search-form justify-content-center">
@@ -35,7 +32,7 @@
             </div>
             <div class="col-lg-3 text-end">
                 <a class="btn btn-sm btn-success text-white border border-dark rounded-3 col-md-8" href="{{ route(Route::currentRouteName())  }}/adauga" role="button">
-                    <i class="fas fa-plus-square text-white me-1"></i>Adaugă client
+                    <i class="fas fa-plus-square text-white me-1"></i>Adaugă utilizator
                 </a>
             </div>
         </div>
@@ -50,78 +47,41 @@
                     {{-- <thead class="text-white rounded" style="background-color: #69A1B1"> --}}
                         <tr class="" style="padding:2rem">
                             <th class="">#</th>
-                            <th class="">Creat de</th>
-                            <th class="">Nume client</th>
-                            <th class="">Telefon</th>
-                            <th class="">Status</th>
-                            <th class="">Adresa</th>
-                            <th class="text-center">Intrare</th>
-                            <th class="text-center">
-                                <form class="needs-validation mb-0" novalidate method="GET" action="{{ route(Route::currentRouteName())  }}">
-                                    @csrf
-                                    Lansare
-                                    <input type="hidden" id="sortare_lansare" name="sortare_lansare" placeholder="Status"
-                                        value="{{ ($sortare_lansare === "cea_mai_noua") ? "cea_mai_veche" : "cea_mai_noua" }}">
-                                    <button class="btn btn-sm btn-primary text-white mx-1 border border-dark rounded-3" type="submit">
-                                        <i class="fa-solid fa-sort"></i>
-                                    </button>
-                                    {{-- <a class="btn btn-sm btn-secondary text-white col-md-4 border border-dark rounded-3" href="{{ route(Route::currentRouteName())  }}" role="button">
-                                        <i class="far fa-trash-alt text-white me-1"></i>Resetează căutarea
-                                    </a> --}}
-                                </form>
-                            </th>
-                            <th class="text-center">Oferță<br>preț</th>
-                            <th class="text-center">Avans</th>
+                            <th class="">Nume</th>
+                            <th class="">Email</th>
+                            <th class="">Rol</th>
                             <th class="text-end">Acțiuni</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($clienti as $client)
+                        @forelse ($users as $user)
                             <tr>
                                 <td align="">
-                                    {{ ($clienti ->currentpage()-1) * $clienti ->perpage() + $loop->index + 1 }}
+                                    {{ ($users ->currentpage()-1) * $users ->perpage() + $loop->index + 1 }}
                                 </td>
                                 <td class="">
-                                    {{ $client->user->name }}
+                                    {{ $user->name }}
                                 </td>
                                 <td class="">
-                                    {{ $client->nume }}
+                                    {{ $user->email }}
                                 </td>
                                 <td class="">
-                                    {{ $client->telefon }}
-                                </td>
-                                <td class="">
-                                    {{ $client->status }}
-                                </td>
-                                <td class="">
-                                    {{ $client->adresa }}
-                                </td>
-                                <td class="text-center">
-                                    {{ $client->intrare ? \Carbon\Carbon::parse($client->intrare)->isoFormat('DD.MM.YYYY') : '' }}
-                                </td>
-                                <td class="text-center">
-                                    {{ $client->lansare ? \Carbon\Carbon::parse($client->lansare)->isoFormat('DD.MM.YYYY') : '' }}
-                                </td>
-                                <td class="text-end">
-                                    {{ $client->oferta_pret }}
-                                </td>
-                                <td class="text-end">
-                                    {{ $client->avans }}
+                                    {{ $user->role }}
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-end">
-                                        <a href="{{ $client->path() }}" class="flex me-1">
+                                        <a href="{{ $user->path() }}" class="flex me-1">
                                             <span class="badge bg-success">Vizualizează</span>
                                         </a>
-                                        <a href="{{ $client->path() }}/modifica" class="flex me-1">
+                                        <a href="{{ $user->path() }}/modifica" class="flex me-1">
                                             <span class="badge bg-primary">Modifică</span>
                                         </a>
                                         <div style="flex" class="">
                                             <a
                                                 href="#"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#stergeClientul{{ $client->id }}"
-                                                title="Șterge Clientul"
+                                                data-bs-target="#stergeUtilizatorul{{ $user->id }}"
+                                                title="Șterge Utilizatorul"
                                                 >
                                                 <span class="badge bg-danger">Șterge</span>
                                             </a>
@@ -138,35 +98,35 @@
 
                 <nav>
                     <ul class="pagination justify-content-center">
-                        {{$clienti->appends(Request::except('page'))->links()}}
+                        {{$users->appends(Request::except('page'))->links()}}
                     </ul>
                 </nav>
         </div>
     </div>
 
-    {{-- Modalele pentru stergere client --}}
-    @foreach ($clienti as $client)
-        <div class="modal fade text-dark" id="stergeClientul{{ $client->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- Modalele pentru stergere user --}}
+    @foreach ($users as $user)
+        <div class="modal fade text-dark" id="stergeUtilizatorul{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-white" id="exampleModalLabel">Clientul: <b>{{ $client->titlu }}</b></h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Utilizatorul: <b>{{ $user->name }}</b></h5>
                     <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align:left;">
-                    Ești sigur ca vrei să ștergi Clientul?
+                    Ești sigur ca vrei să ștergi Utilizatorul?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Renunță</button>
 
-                    <form method="POST" action="{{ $client->path() }}">
+                    <form method="POST" action="{{ $user->path() }}">
                         @method('DELETE')
                         @csrf
                         <button
                             type="submit"
                             class="btn btn-danger text-white"
                             >
-                            Șterge Clientul
+                            Șterge Utilizatorul
                         </button>
                     </form>
 

@@ -49,7 +49,11 @@
                                 <i class="fa-solid fa-users me-1"></i>Clienți
                             </a>
                         </li>
-                    </ul>
+                        <li class="nav-item me-3">
+                            <a class="nav-link active" aria-current="page" href="/users">
+                                <i class="fa-solid fa-user-gear me-1"></i>Utilizatori
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

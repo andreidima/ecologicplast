@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,5 +23,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/acasa', 'acasa');
 
     Route::resource('/clienti', ClientController::class,  ['parameters' => ['clienti' => 'client']]);
+    Route::resource('/users', UserController::class);
 });
 

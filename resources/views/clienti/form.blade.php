@@ -27,11 +27,9 @@
                 <label for="status" class="mb-0 ps-3">Status</label>
                 <select name="status" class="form-select bg-white rounded-3 {{ $errors->has('status') ? 'is-invalid' : '' }}">
                     <option value='' selected></option>
-                    <option value='Nou' {{ (old('status', $client->status) == 'Nou') ? 'selected' : '' }}> Nou </option>
-                    <option value='Ofertat' {{ (old('status', $client->status) == 'Ofertat') ? 'selected' : '' }}> Ofertat </option>
+                    <option value='Contractat' {{ (old('status', $client->status) == 'Contractat') ? 'selected' : '' }}> Contractat </option>
+                    <option value='Pierdut' {{ (old('status', $client->status) == 'Pierdut') ? 'selected' : '' }}> Pierdut </option>
                     <option value='In derulare' {{ (old('status', $client->status) == 'In derulare') ? 'selected' : '' }}> In derulare </option>
-                    <option value='Acceptat' {{ (old('status', $client->status) == 'Acceptat') ? 'selected' : '' }}> Acceptat </option>
-                    <option value='Refuzat' {{ (old('status', $client->status) == 'Refuzat') ? 'selected' : '' }}> Refuzat </option>
                 </select>
             </div>
             <div class="col-lg-12 mb-5 mx-auto">
@@ -46,7 +44,7 @@
             <div class="col-lg-3 mb-5 mx-auto">
                 <label for="intrare" class="mb-0 ps-xxl-3">Intrare</label>
                 <vue-datepicker-next
-                    data-veche="{{ old('intrare', ($client->intrare ?? '')) }}"
+                    data-veche="{{ old('intrare', ($client->intrare ?? (Route::currentRouteName() === "clienti.create") ? \Carbon\Carbon::today() : '' )) }}"
                     nume-camp-db="intrare"
                     tip="date"
                     value-type="YYYY-MM-DD"
