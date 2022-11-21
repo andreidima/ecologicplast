@@ -29,6 +29,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client)
     {
+        dd($user->id);
         return (($user->id === $client->user_id) || ($user->role === "Administrator"));
     }
 }
