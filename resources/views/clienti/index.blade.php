@@ -52,9 +52,10 @@
                             <th class="">#</th>
                             <th class="">Creat de</th>
                             <th class="">Nume client</th>
-                            <th class="">Telefon</th>
-                            <th class="">Status</th>
                             <th class="">Adresa</th>
+                            <th class="">Telefon</th>
+                            <th class="text-center">Status</th>
+                            <th class="">Obervații</th>
                             <th class="text-center">Intrare</th>
                             <th class="text-center">
                                 <form class="needs-validation mb-0" novalidate method="GET" action="{{ route(Route::currentRouteName())  }}">
@@ -88,13 +89,35 @@
                                     {{ $client->nume }}
                                 </td>
                                 <td class="">
+                                    {{ $client->adresa }}
+                                </td>
+                                <td class="">
                                     {{ $client->telefon }}
                                 </td>
-                                <td class="">
-                                    {{ $client->status }}
+                                <td class="text-center">
+                                    @switch($client->status)
+                                        @case("In derulare")
+                                                <span class="badge" style="background-color:orange">
+                                                    {{ $client->status }}
+                                                </span>
+                                            @break
+                                        @case("Contractat")
+                                                <span class="badge" style="background-color:green">
+                                                    {{ $client->status }}
+                                                </span>
+                                            @break
+                                        @case("Pierdut")
+                                                <span class="badge" style="background-color:red">
+                                                    {{ $client->status }}
+                                                </span>
+                                            @break
+
+                                        @default
+                                            {{ $client->status }}
+                                    @endswitch
                                 </td>
                                 <td class="">
-                                    {{ $client->adresa }}
+                                    {{ $client->observatii }}
                                 </td>
                                 <td class="text-center">
                                     {{ $client->intrare ? \Carbon\Carbon::parse($client->intrare)->isoFormat('DD.MM.YYYY') : '' }}

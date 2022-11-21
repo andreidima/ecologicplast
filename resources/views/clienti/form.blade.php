@@ -71,7 +71,6 @@
                     name="oferta_pret"
                     placeholder=""
                     value="{{ old('oferta_pret', $client->oferta_pret) }}">
-                <small class="ps-3">Punct(.) pentru zecimale</small>
             </div>
             <div class="col-lg-3 mb-5 mx-auto">
                 <label for="avans" class="mb-0 ps-3">Avans</label>
@@ -81,7 +80,6 @@
                     name="avans"
                     placeholder=""
                     value="{{ old('avans', $client->avans) }}">
-                <small class="ps-3">Punct(.) pentru zecimale</small>
             </div>
             <div class="col-lg-12 mb-5 mx-auto">
                 <label for="observatii" class="form-label mb-0 ps-3">Observații</label>
