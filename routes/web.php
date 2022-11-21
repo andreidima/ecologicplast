@@ -23,6 +23,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/acasa', 'acasa');
 
     Route::resource('/clienti', ClientController::class,  ['parameters' => ['clienti' => 'client']]);
+
+    Route::get('/schimbare-parola', [UserController::class, 'schimbareParola'])->name('schimbare_parola');
+    Route::post('/schimbare-parola', [UserController::class, 'actualizareParola'])->name('actualizare_parola');
 });
 
 Route::middleware(['role:Administrator'])->group(function () {

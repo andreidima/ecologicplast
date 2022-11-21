@@ -147,4 +147,24 @@ class UserController extends Controller
             ]
         );
     }
+
+    public function schimbareParola()
+    {
+        return view('users.schimbareParola');
+    }
+    public function actualizareParola (Request $request)
+    {
+        $request->validate([
+            'parola' => 'required|confirmed',
+        ]);
+
+        // User::whereId(auth()->user()->id)->update([
+        //     'password' => Hash::make($request->new_password)
+        // ]);
+        auth()->user()->update([
+            'password' => $request->parola
+        ]);
+
+        return redirect('/acasa')->with('status', 'Parola a fost schimbată cu succes!');
+    }
 }

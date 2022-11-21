@@ -8,9 +8,10 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    @include ('errors')
 
                     Bine ai venit <b>{{ auth()->user()->name ?? '' }}</b>!
+
+                    @include ('errors')
                 </div>
             </div>
         </div>

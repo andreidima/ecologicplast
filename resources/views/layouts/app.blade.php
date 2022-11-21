@@ -80,6 +80,8 @@
                                 </a>
 
                                 <ul class="dropdown-menu" aria-labelledby="navbarAuthentication">
+                                    <li><a class="dropdown-item" href="/schimbare-parola">Schimbă parola</a></li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
