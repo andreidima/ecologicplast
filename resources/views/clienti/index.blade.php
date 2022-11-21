@@ -82,7 +82,7 @@
                                     {{ ($clienti ->currentpage()-1) * $clienti ->perpage() + $loop->index + 1 }}
                                 </td>
                                 <td class="">
-                                    {{ $client->user->name }}
+                                    {{ $client->user->name ?? ''}}
                                 </td>
                                 <td class="">
                                     {{ $client->nume }}
