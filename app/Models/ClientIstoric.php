@@ -5,27 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\ClientIstoric;
-
-class Client extends Model
+class ClientIstoric extends Model
 {
     use HasFactory;
 
-    protected $table = 'clienti';
+    public $timestamps = false;
+
+    protected $table = 'clienti_istoric';
     protected $guarded = [];
 
     public function path()
     {
-        return "/clienti/{$this->id}";
+        return "/clienti-istoric/{$this->id}";
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function istoricuri()
-    {
-        return $this->hasMany(ClientIstoric::class, 'id');
     }
 }

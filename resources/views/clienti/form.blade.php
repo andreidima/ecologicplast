@@ -44,7 +44,7 @@
             <div class="col-lg-3 mb-5 mx-auto">
                 <label for="intrare" class="mb-0 ps-xxl-3">Intrare</label>
                 <vue-datepicker-next
-                    data-veche="{{ old('intrare', ($client->intrare ?? (Route::currentRouteName() === "clienti.create") ? \Carbon\Carbon::today() : '' )) }}"
+                    data-veche="{{ old('intrare', ($client->intrare ? $client->intrare : ((Route::currentRouteName() === "clienti.create") ? \Carbon\Carbon::today() : '' ))) }}"
                     nume-camp-db="intrare"
                     tip="date"
                     value-type="YYYY-MM-DD"

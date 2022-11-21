@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Client;
+use App\Models\ClientIstoric;
 
 class ClientController extends Controller
 {
@@ -71,6 +72,13 @@ class ClientController extends Controller
     {
         $client = Client::create($this->validateRequest($request));
 
+        // Salvare in istoric
+        $client_istoric = new ClientIstoric;
+        $client_istoric->fill($client->makeHidden(['created_at', 'updated_at'])->attributesToArray());
+        $client_istoric->operatie = 'Adaugare';
+        $client_istoric->operatie_user_id = auth()->user()->id ?? null;
+        $client_istoric->save();
+
         return redirect($request->session()->get('client_return_url') ?? ('/clienti'))->with('status', 'Clientul „' . ($client->nume ?? '') . '” a fost adăugat cu succes!');
     }
 
@@ -117,6 +125,13 @@ class ClientController extends Controller
 
         $client->update($this->validateRequest($request));
 
+        // Salvare in istoric
+        $client_istoric = new ClientIstoric;
+        $client_istoric->fill($client->makeHidden(['created_at', 'updated_at'])->attributesToArray());
+        $client_istoric->operatie = 'Modificare';
+        $client_istoric->operatie_user_id = auth()->user()->id ?? null;
+        $client_istoric->save();
+
         return redirect($request->session()->get('client_return_url') ?? ('/clienti'))->with('status', 'Clientul „' . ($client->nume ?? '') . '” a fost modificat cu succes!');
     }
 
@@ -129,6 +144,13 @@ class ClientController extends Controller
     public function destroy(Request $request, Client $client)
     {
         $this->authorize('update', $client);
+
+        // Salvare in istoric
+        $client_istoric = new ClientIstoric;
+        $client_istoric->fill($client->makeHidden(['created_at', 'updated_at'])->attributesToArray());
+        $client_istoric->operatie = 'Stergere';
+        $client_istoric->operatie_user_id = auth()->user()->id ?? null;
+        $client_istoric->save();
 
         $client->delete();
 
@@ -159,8 +181,8 @@ class ClientController extends Controller
                 'status' => 'nullable|max:500',
                 'intrare' => '',
                 'lansare' => '',
-                'oferta_pret' => '',
-                'avans' => '',
+                'oferta_pret' => 'nullable|integer',
+                'avans' => 'nullable|integer',
                 'observatii' => '',
                 'user_id' => '',
                 // 'cheie_unica' => ''
