@@ -41,13 +41,9 @@ class ClientController extends Controller
             }, function ($query) {
                 $query->latest();
             });
-// echo"1";
-// echo auth()->user()->role;
         if (auth()->user()->role !== "Administrator"){
             $query = $query->where('user_id', auth()->user()->id);
-            // echo 'here';
         }
-// dd($query);
         $clienti = $query->simplePaginate(25);
 
         return view('clienti.index', compact('clienti', 'search_nume', 'search_telefon', 'search_status', 'sortare_lansare'));
