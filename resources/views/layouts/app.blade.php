@@ -111,7 +111,7 @@
     <footer class="mt-auto py-4 text-center text-white culoare1">
         <div class="">
             <p class="">
-                © Ecologic Plast
+                © Ambientic
             </p>
             <span class="text-white">
                 <a href="https://validsoftware.ro/dezvoltare-aplicatii-web-personalizate/" class="text-white" target="_blank">
