@@ -22,7 +22,7 @@ class ClientController extends Controller
         $search_status = $request->search_status;
         $sortare_lansare = $request->sortare_lansare;
 
-        $clienti = Client::with('user')
+        $query = Client::with('user')
             ->when($search_nume, function ($query, $search_nume) {
                 return $query->where('nume', 'like', '%' . $search_nume . '%');
             })
@@ -40,8 +40,15 @@ class ClientController extends Controller
                 }
             }, function ($query) {
                 $query->latest();
-            })
-            ->simplePaginate(25);
+            });
+// echo"1";
+// echo auth()->user()->role;
+        if (auth()->user()->role !== "Administrator"){
+            $query = $query->where('user_id', auth()->user()->id);
+            // echo 'here';
+        }
+// dd($query);
+        $clienti = $query->simplePaginate(25);
 
         return view('clienti.index', compact('clienti', 'search_nume', 'search_telefon', 'search_status', 'sortare_lansare'));
     }
@@ -79,6 +86,8 @@ class ClientController extends Controller
      */
     public function show(Request $request, Client $client)
     {
+        $this->authorize('update', $client);
+
         $request->session()->get('client_return_url') ?? $request->session()->put('client_return_url', url()->previous());
 
         return view('clienti.show', compact('client'));
@@ -92,6 +101,8 @@ class ClientController extends Controller
      */
     public function edit(Request $request, Client $client)
     {
+        $this->authorize('update', $client);
+
         $request->session()->get('client_return_url') ?? $request->session()->put('client_return_url', url()->previous());
 
         return view('clienti.edit', compact('client'));
@@ -106,6 +117,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
+        $this->authorize('update', $client);
+
         $client->update($this->validateRequest($request));
 
         return redirect($request->session()->get('client_return_url') ?? ('/clienti'))->with('status', 'Clientul „' . ($client->nume ?? '') . '” a fost modificat cu succes!');
@@ -119,6 +132,8 @@ class ClientController extends Controller
      */
     public function destroy(Request $request, Client $client)
     {
+        $this->authorize('update', $client);
+
         $client->delete();
 
         return back()->with('status', 'Clientul „' . ($client->nume ?? '') . '” a fost șters cu succes!');

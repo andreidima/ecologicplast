@@ -49,11 +49,13 @@
                                 <i class="fa-solid fa-users me-1"></i>Clienți
                             </a>
                         </li>
-                        <li class="nav-item me-3">
-                            <a class="nav-link active" aria-current="page" href="/users">
-                                <i class="fa-solid fa-user-gear me-1"></i>Utilizatori
-                            </a>
-                        </li>
+                        @if (auth()->user()->role === 'Administrator')
+                            <li class="nav-item me-3">
+                                <a class="nav-link active" aria-current="page" href="/users">
+                                    <i class="fa-solid fa-user-gear me-1"></i>Utilizatori
+                                </a>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -23,6 +23,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/acasa', 'acasa');
 
     Route::resource('/clienti', ClientController::class,  ['parameters' => ['clienti' => 'client']]);
+});
+
+Route::middleware(['role:Administrator'])->group(function () {
     Route::resource('/users', UserController::class);
 });
 
