@@ -12,6 +12,7 @@ class ClientIstoric extends Model
     public $timestamps = false;
 
     protected $table = 'clienti_istoric';
+    protected $primaryKey = 'id_pk';
     protected $guarded = [];
 
     public function path()

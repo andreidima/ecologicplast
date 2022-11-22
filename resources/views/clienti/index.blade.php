@@ -133,9 +133,6 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-end">
-                                        <a href="{{ $client->path() }}" class="flex me-1">
-                                            <span class="badge bg-success">Vizualizează</span>
-                                        </a>
                                         <a href="{{ $client->path() }}/modifica" class="flex me-1">
                                             <span class="badge bg-primary">Modifică</span>
                                         </a>
@@ -150,6 +147,128 @@
                                             </a>
                                         </div>
                                     </div>
+                                    <div class="d-flex justify-content-end">
+                                        <a href="{{ $client->path() }}" class="flex me-1">
+                                            <span class="badge bg-success">Vizualizează</span>
+                                        </a>
+                                        <a class="" data-bs-toggle="collapse" href="#client{{ $loop->iteration }}" role="button" aria-expanded="false" aria-controls="client{{ $loop->iteration }}">
+                                            <span class="badge bg-info">Istoric</span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+
+                            </tr>
+                            <tr class="collapse multi-collapse" id="client{{ $loop->iteration }}">
+                                <td colspan="12" class="">
+                                    @if ($client->istoricuri->count() < 2)
+                                        <div class="text-center">
+                                            <span class="px-2 bg-info text-white">
+                                                Acest client nu are nici o modificare
+                                            </span>
+                                        </div>
+                                    @else
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive rounded w-100 p-5">
+                                                <table class="table table-hover rounded">
+                                                    <thead class="text-white rounded bg-info">
+                                                    {{-- <thead class="text-white rounded" style="background-color: #69A1B1"> --}}
+                                                        <tr class="" style="padding:2rem">
+                                                            <th class="">#</th>
+                                                            <th class="">Modificat de</th>
+                                                            <th class="">Nume client</th>
+                                                            <th class="">Adresa</th>
+                                                            <th class="">Telefon</th>
+                                                            <th class="text-center">Status</th>
+                                                            <th class="">Obervații</th>
+                                                            <th class="text-center">Intrare</th>
+                                                            <th class="text-center">Lansare</th>
+                                                            <th class="text-center">Oferță preț</th>
+                                                            <th class="text-center">Avans</th>
+                                                            <th class="text-center">Data operației</th>
+                                                            <th class="text-end">Acțiuni</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($client->istoricuri as $client_istoric)
+                                                            <tr>
+                                                                <td>
+                                                                    {{ $loop->iteration }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $client_istoric->user->name ?? '' }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $client_istoric->nume }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $client_istoric->adresa }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $client_istoric->telefon }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    @switch($client_istoric->status)
+                                                                        @case("In derulare")
+                                                                                <span class="badge" style="background-color:orange">
+                                                                                    {{ $client_istoric->status }}
+                                                                                </span>
+                                                                            @break
+                                                                        @case("Contractat")
+                                                                                <span class="badge" style="background-color:green">
+                                                                                    {{ $client_istoric->status }}
+                                                                                </span>
+                                                                            @break
+                                                                        @case("Pierdut")
+                                                                                <span class="badge" style="background-color:red">
+                                                                                    {{ $client_istoric->status }}
+                                                                                </span>
+                                                                            @break
+
+                                                                        @default
+                                                                            {{ $client_istoric->status }}
+                                                                    @endswitch
+                                                                </td>
+                                                                <td>
+                                                                    {{ $client_istoric->observatii }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {{ $client_istoric->intrare ? \Carbon\Carbon::parse($client_istoric->intrare)->isoFormat('DD.MM.YYYY') : '' }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {{ $client_istoric->lansare ? \Carbon\Carbon::parse($client_istoric->lansare)->isoFormat('DD.MM.YYYY') : '' }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {{ $client_istoric->oferta_pret }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {{ $client_istoric->avans }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {{ $client_istoric->data_operatie ? \Carbon\Carbon::parse($client_istoric->data_operatie)->isoFormat('DD.MM.YYYY HH:mm') : '' }}
+                                                                </td>
+                                                                <td class="text-end">
+                                                                    @if ($loop->last)
+                                                                        Versiunea curentă
+                                                                    @else
+                                                                        <a
+                                                                            href="#"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#restaureazaClientul{{ $loop->parent->iteration }}Istoricul{{ $loop->iteration }}"
+                                                                            title="Restaurează Istoricul"
+                                                                            >
+                                                                            <span class="badge bg-warning">Restaurează</span>
+                                                                        </a>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
@@ -197,6 +316,40 @@
                 </div>
             </div>
         </div>
+    @endforeach
+
+    {{-- Modalele pentru restaurare istoric client --}}
+    @foreach ($clienti as $client)
+        @foreach ($client->istoricuri as $client_istoric)
+            <div class="modal fade text-dark" id="restaureazaClientul{{ $loop->parent->iteration }}Istoricul{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="restaureazaClientIstoric" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-white" id="restaureazaClientIstoric">Clientul: <b>{{ $client->nume }}</b></h5>
+                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align:left;">
+                        Ești sigur ca vrei să restaurezi versiunea anterioară?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Renunță</button>
+
+                        <form method="POST" action="/clienti/{{ $client->id }}/restaurare-istoric/{{ $client_istoric->id_pk }}">
+                            @method('POST')
+                            @csrf
+                            <button
+                                type="submit"
+                                class="btn btn-danger text-white"
+                                >
+                                Restaurează
+                            </button>
+                        </form>
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     @endforeach
 
 @endsection

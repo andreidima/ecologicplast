@@ -22,6 +22,8 @@ Route::redirect('/', '/acasa');
 Route::group(['middleware' => 'auth'], function () {
     Route::view('/acasa', 'acasa');
 
+    Route::post('/clienti/{client}/restaurare-istoric/{client_istoric}', [ClientController::class, 'restaurareIstoric']);
+
     Route::resource('/clienti', ClientController::class,  ['parameters' => ['clienti' => 'client']]);
 
     Route::get('/schimbare-parola', [UserController::class, 'schimbareParola'])->name('schimbare_parola');

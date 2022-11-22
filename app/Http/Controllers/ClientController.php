@@ -23,7 +23,7 @@ class ClientController extends Controller
         $search_status = $request->search_status;
         $sortare_lansare = $request->sortare_lansare;
 
-        $query = Client::with('user')
+        $query = Client::with('user', 'istoricuri')
             ->when($search_nume, function ($query, $search_nume) {
                 return $query->where('nume', 'like', '%' . $search_nume . '%');
             })
@@ -126,11 +126,13 @@ class ClientController extends Controller
         $client->update($this->validateRequest($request));
 
         // Salvare in istoric
-        $client_istoric = new ClientIstoric;
-        $client_istoric->fill($client->makeHidden(['created_at', 'updated_at'])->attributesToArray());
-        $client_istoric->operatie = 'Modificare';
-        $client_istoric->operatie_user_id = auth()->user()->id ?? null;
-        $client_istoric->save();
+        if ($client->wasChanged()){
+            $client_istoric = new ClientIstoric;
+            $client_istoric->fill($client->makeHidden(['created_at', 'updated_at'])->attributesToArray());
+            $client_istoric->operatie = 'Modificare';
+            $client_istoric->operatie_user_id = auth()->user()->id ?? null;
+            $client_istoric->save();
+        }
 
         return redirect($request->session()->get('client_return_url') ?? ('/clienti'))->with('status', 'Clientul „' . ($client->nume ?? '') . '” a fost modificat cu succes!');
     }
@@ -191,5 +193,33 @@ class ClientController extends Controller
 
             ]
         );
+    }
+
+    public function restaurareIstoric(Request $request, Client $client = null, ClientIstoric $client_istoric = null){
+        $client->nume = $client_istoric->nume;
+        $client->telefon = $client_istoric->telefon;
+        $client->adresa = $client_istoric->adresa;
+        $client->status = $client_istoric->status;
+        $client->intrare = $client_istoric->intrare;
+        $client->lansare = $client_istoric->lansare;
+        $client->oferta_pret = $client_istoric->oferta_pret;
+        $client->avans = $client_istoric->avans;
+        $client->observatii = $client_istoric->observatii;
+        $client->user_id = $client_istoric->user_id;
+
+        $client->save();
+
+        // Salvare in istoric
+        if ($client->wasChanged()){
+            $client_istoric = new ClientIstoric;
+            $client_istoric->fill($client->makeHidden(['created_at', 'updated_at'])->attributesToArray());
+            $client_istoric->operatie = 'Modificare';
+            $client_istoric->operatie_user_id = auth()->user()->id ?? null;
+            $client_istoric->save();
+            return redirect($request->session()->get('client_return_url') ?? ('/clienti'))->with('status', 'Clientul „' . ($client->nume ?? '') . '” a fost restaurat cu succes!');
+        } else {
+            return redirect($request->session()->get('client_return_url') ?? ('/clienti'))->with('warning', 'Clientul „' . ($client->nume ?? '') . '” nu a avut nimic de restaurat!');
+        }
+
     }
 }
