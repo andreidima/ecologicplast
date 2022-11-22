@@ -24,4 +24,9 @@ class ClientIstoric extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function user_istoric()
+    {
+        return $this->belongsTo(User::class, 'operatie_user_id');
+    }
 }

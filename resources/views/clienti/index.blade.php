@@ -197,7 +197,7 @@
                                                                     {{ $loop->iteration }}
                                                                 </td>
                                                                 <td>
-                                                                    {{ $client_istoric->user->name ?? '' }}
+                                                                    {{ $client_istoric->user_istoric->name ?? '' }}
                                                                 </td>
                                                                 <td>
                                                                     {{ $client_istoric->nume }}
